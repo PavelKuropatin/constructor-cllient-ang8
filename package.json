@@ -1,13 +1,18 @@
 {
   "name": "diploma-client-ang8",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "engines": {
+    "node": "12.13.0"
+  },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --watch",
-    "build": "ng build",
+    "build": "ng build --aot",
+    "heroku-postbuild": "ng build --aot --prod",
+    "start": "node server.js",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "dev": "ng serve --watch"
   },
   "private": true,
   "dependencies": {

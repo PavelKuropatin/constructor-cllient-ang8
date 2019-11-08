@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  private diagram: Diagram[];
+  diagrams: Diagram[];
 
   constructor(
     private router: Router,
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
   }
 
   getStates() {
-    this.objectHttpService.getDiagrams().subscribe(states => this.diagram = states);
+    this.objectHttpService.getDiagrams().subscribe(diagrams => this.diagrams = diagrams);
   }
 
 }
