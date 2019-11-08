@@ -1,1 +1,18 @@
 <p>home works!</p>
+<div (click)="goToModeling()">go to modeling</div>
+<ul>
+
+  <li *ngFor="let diagram of diagram">
+    <label>
+      {{diagram.uuid}} : <input [(ngModel)]="diagram.name"/>
+    </label>
+    <div *ngFor="let state of diagram.states">
+      <ul>
+        <li>{{state.name}}</li>
+        <li>{{state.template}}</li>
+        <li>{{state.color}}</li>
+      </ul>
+    </div>
+  </li>
+
+</ul>
