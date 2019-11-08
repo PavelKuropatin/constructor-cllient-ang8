@@ -1,7 +1,6 @@
 <p>home works!</p>
 <div (click)="goToModeling()">go to modeling</div>
 <ul>
-
   <li *ngFor="let diagram of diagram">
     <label>
       {{diagram.uuid}} : <input [(ngModel)]="diagram.name"/>
@@ -14,5 +13,4 @@
       </ul>
     </div>
   </li>
-
 </ul>
