@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Diagram} from '../../../domain/diagram';
+import {Diagram} from '../../domain/diagram';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../../environments/environment';
-import {State} from '../../../domain/state';
-import {Variable} from '../../../domain/variable';
+import {environment} from '../../../environments/environment';
+import {State} from '../../domain/state';
+import {Variable} from '../../domain/variable';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +57,7 @@ export class ObjectHttpService {
     return this.http.request<State>('delete', `${this.stateUrl}/${stateUuid}/container/delete`, {body: variable});
   }
 
-  deleteDiagram(diagramUuid: string) {
-    this.http.delete(`${this.diagramUrl}/${diagramUuid}`);
+  deleteDiagram(diagramUuid: string): Observable<object> {
+    return this.http.delete(`${this.diagramUrl}/${diagramUuid}`);
   }
 }

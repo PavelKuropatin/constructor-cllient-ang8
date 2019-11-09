@@ -1,16 +1,54 @@
-<p>home works!</p>
-<div (click)="goToModeling()">go to modeling</div>
-<ul>
-  <li *ngFor="let diagram of diagrams">
-    <label>
-      {{diagram.uuid}} : <input [(ngModel)]="diagram.name"/>
-    </label>
-    <div *ngFor="let state of diagram.states">
-      <ul>
-        <li>{{state.name}}</li>
-        <li>{{state.template}}</li>
-        <li>{{state.color}}</li>
-      </ul>
-    </div>
-  </li>
-</ul>
+<div fxLayout="row">
+  <div *ngIf="diagram" class="sidenav-container" fxFlex="25">
+    <app-sidenav [activeState]="activeState" [diagram]="diagram"
+                 [isActiveSetting]="isActiveSetting">
+    </app-sidenav>
+  </div>
+  <div class="schema-container" fxFlex>
+    <!--    *ngIf="!isActiveSetting">-->
+    <mat-toolbar color="primary">
+      <mat-toolbar-row fxLayoutAlign="space-between center">
+        <button [matMenuTriggerFor]="diagram_menu" aria-label="Example icon-button with a menu" mat-icon-button>
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #diagram_menu="matMenu">
+          <button (click)="createNewDiagram()" mat-menu-item>
+            {{ 'diagram.create' | translate }}
+          </button>
+          <button (click)="updateDiagram()" *ngIf="diagram" mat-menu-item>
+            {{ 'diagram.update' | translate }}
+          </button>
+          <button (click)="openDiagram()" mat-menu-item>
+            {{ 'diagram.open' | translate }}
+          </button>
+        </mat-menu>
+      </mat-toolbar-row>
+      <mat-toolbar-row fxLayoutAlign="center center">
+        <button (click)="goToModeling()" mat-raised-button>{{ 'model.self' | translate }}</button>
+      </mat-toolbar-row>
+      <mat-toolbar-row>
+        <mat-slider [(ngModel)]="zoomLevel" [max]="200" [min]="0" [step]="10" aria-label="red"
+                    class="mat-warn"></mat-slider>
+      </mat-toolbar-row>
+      <mat-toolbar-row fxLayoutAlign="end center">
+        <button [matMenuTriggerFor]="language_menu" mat-icon-button>
+          <mat-icon>language</mat-icon>
+        </button>
+        <mat-menu #language_menu="matMenu">
+          <button (click)="changeLanguage('en')" mat-menu-item>
+            {{ 'language.en' | translate }}
+          </button>
+          <button (click)="changeLanguage('ru')" mat-menu-item>
+            {{ 'language.ru' | translate }}  </button>
+        </mat-menu>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <!--    <js-plumb-canvas id="container" on-connection="vm.onConnection" x="vm.pos_x" y="vm.pos_y"-->
+    <!--                     zoom="vm.zoomlevel">-->
+    <!--      <ng-include ng-repeat="state in vm.diagram.states" src="state.template"></ng-include>-->
+    <!--    </js-plumb-canvas>-->
+  </div>
+
+  <!--  <setting flex="75" ngIf="isActiveSetting"></setting>-->
+</div>

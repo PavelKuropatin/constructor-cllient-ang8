@@ -1,0 +1,63 @@
+{
+  "language": {
+    "en": "English",
+    "ru": "Russian"
+  },
+  "schema": {
+    "self": "Schema"
+  },
+  "diagram": {
+    "self": "Diagram",
+    "open": "Open diagram",
+    "create": "Create new diagram",
+    "update": "Update current diagram",
+    "choose": "Choose diagram...",
+    "info": "Diagram info",
+    "name": "Name",
+    "description": "Description",
+    "action": "action"
+  },
+  "apply": "Apply",
+  "close": "Close",
+  "param": {
+    "name": "Param name",
+    "value": "Value",
+    "add": "Add container value",
+    "delete": "Delete container value"
+  },
+  "function": {
+    "enter": "Enter Function",
+    "result": "Result"
+  },
+  "model": {
+    "start": "Start",
+    "stop": "Stop",
+    "self": "Model",
+    "settings": "Model settings",
+    "interval": "Interval (ms)",
+    "generator": {
+      "var_name": "Variable name",
+      "var_start": "Start value",
+      "var_step": "Step"
+    },
+    "socket": {
+      "host": "Host",
+      "port": "Port"
+    }
+  },
+  "state": {
+    "name": "Name of State",
+    "source": "Source",
+    "target": "Target",
+    "connection": {
+      "self": "Connection",
+      "condition": "Condition"
+    },
+    "endpoints": "Endpoints",
+    "position": "Position",
+    "template": "Template",
+    "color": "Color"
+  },
+  "Generator": "Generator",
+  "Socket": "Socket"
+}

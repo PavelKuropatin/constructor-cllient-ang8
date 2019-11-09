@@ -1,0 +1,54 @@
+.jtk-drag-select * {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
+.connectorHoverClass {
+  color: red;
+}
+
+.sidenav-container {
+  overflow: auto;
+}
+
+.scrollable {
+  overflow-y: scroll;
+}
+
+.schema-container {
+  overflow: hidden;
+}
+
+.endpoint_TopCenter, .endpoint_BottomCenter, .endpoint_LeftMiddle, .endpoint_RightMiddle {
+  display: inline-block;
+}
+
+js-plumb-canvas {
+/ / background-image: url(/assets/images/grid_background.gif);
+/ / background-repeat: repeat;
+  background: #ECF5F9;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  width: 55000px;
+  height: 55000px;
+  position: relative;
+  left: -100px;
+  top: -100px;
+}
+
+mat-toolbar {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+mat-toolbar-row {
+  width: auto;
+}
+

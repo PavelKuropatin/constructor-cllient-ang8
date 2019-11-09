@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ObjectHttpService} from './object-http.service';
-import {Diagram} from '../../../domain/diagram';
-import {State} from '../../../domain/state';
-import {Variable} from '../../../domain/variable';
-import {Target} from '../../../domain/target';
+import {Diagram} from '../../domain/diagram';
+import {State} from '../../domain/state';
+import {Variable} from '../../domain/variable';
+import {Target} from '../../domain/target';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,7 @@ export class ObjectService {
   private configState: State;
 
   constructor(private objectHttpService: ObjectHttpService) {
+    console.log(objectHttpService);
   }
 
   createState(diagram: Diagram) {
