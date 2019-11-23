@@ -16,7 +16,6 @@ export class OpenDiagramComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<OpenDiagramComponent>,
     private objectHttpService: ObjectHttpService
-    // @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
   }
 
@@ -39,7 +38,7 @@ export class OpenDiagramComponent implements OnInit {
     this.chosenUuid = diagramUuid;
   }
 
-  chooseDiagram() {
+  apply() {
     this.dialogRef.close(this.chosenUuid);
   }
 

@@ -1,0 +1,42 @@
+.circle-state {
+  z-index: 10;
+  position: absolute;
+
+  border-right: 70px solid black;
+  border-top: 70px solid white;
+  border-left: 70px solid black;
+  border-bottom: 70px solid white;
+  border-top-left-radius: 70px;
+  border-top-right-radius: 70px;
+  border-bottom-left-radius: 70px;
+  border-bottom-right-radius: 70px;
+  //border-width: 70px;
+}
+
+.circle-state-top-container {
+  position: absolute;
+  top: -73px;
+  left: -25px;
+  width: 45px;
+  height: 20px;
+}
+
+.circle-state-bottom-container {
+  position: absolute;
+  top: 12px;
+  left: -25px;
+  width: 45px;
+  height: 20px;
+}
+
+.endpoint-circle-style-right {
+  position: absolute;
+  top: 70px;
+  right: 0;
+}
+
+.endpoint-circle-style-left {
+  position: absolute;
+  top: 70px;
+  left: 140px;
+}

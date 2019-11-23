@@ -1,0 +1,25 @@
+<md-card>
+  <md-card-header>
+    <md-card-header-text>
+      <div class="title-text">{{ 'param.add' | translate }}</div>
+    </md-card-header-text>
+  </md-card-header>
+  <md-card-content>
+    <md-input-container>
+      <label>{{ 'param.name' | translate }}</label>
+      <input [(ngModel)]="variable.label"/>
+    </md-input-container>
+    <md-input-container>
+      <label>{{ 'param.value' | translate }}</label>
+      <input [(ngModel)]="variable.value"/>
+    </md-input-container>
+  </md-card-content>
+  <md-input-container>
+    <md-button (click)="apply()">
+      {{ 'apply' | translate }}
+    </md-button>
+    <md-button (click)="cancel()">
+      {{ 'close' | translate}}
+    </md-button>
+  </md-input-container>
+</md-card>

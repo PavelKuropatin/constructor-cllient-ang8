@@ -1,167 +1,124 @@
-<mat-card class="sidenav" fxLayout="column" fxLayoutAlign="start start">
-  <mat-card-header *ngIf="!isActiveModel" fxLayout="row" fxLayoutAlign="space-between center">
-    <div class="mat-card-header-text">1</div>
-    <div>
-      <mat-card-title>{{diagram.name}}</mat-card-title>
-      <mat-card-subtitle>{{diagram.description}}</mat-card-subtitle>
-    </div>
-    <button (click)="createNewState(diagram)" mat-icon-button>
-      <mat-icon>playlist_add</mat-icon>
-    </button>
-  </mat-card-header>
+<md-card class="sidenav">
+  <md-card-header *ngIf="!isActiveModel">
+    <md-card-header-text>
+      <div class="title-text">{{diagram.name}}</div>
+      <div>{{diagram.description}}</div>
+    </md-card-header-text>
+    <md-button (click)="createNewState(diagram)" class="md-icon-button">
+      <md-icon>playlist_add</md-icon>
+    </md-button>
+  </md-card-header>
 
-  <mat-divider></mat-divider>
+  <md-divider></md-divider>
 
-  <mat-card-content *ngIf="diagram.states.length >= 1" class="scrollable" fxFlex style="max-height: 800px">
-    <mat-card *ngFor="let state of diagram.states">
-      <mat-card-header>
-        <mat-card-title>
-          <div fxLayout="column">
-            <mat-card-title>
-              <span class="title-text">{{state.name}}</span>
-            </mat-card-title>
-            <mat-card-subtitle>
-              <span *ngIf="!isActiveModel" class="medium-text">
-                {{ 'state.position' | translate }}: [{{state.x| number}}, {{state.y| number}}]
-              </span>
-            </mat-card-subtitle>
+  <md-card-content *ngIf="diagram.states.length >= 1" class="scrollable" flex style="max-height: 800px">
+    <md-card *ngFor="let state of diagram.states">
+      <md-card-header>
+        <md-card-header-text>
+          <div layout="column">
+            <span class="title-text">{{state.name}}</span>
+            <span *ngIf="!isActiveModel" class="medium-text">
+                            {{ 'state.position' | translate }}: [{{state.x| number}}, {{state.y| number}}]
+                        </span>
           </div>
-        </mat-card-title>
-        <button (click)="configState(state)" *ngIf="!isActiveModel" mat-icon-button>
-          <mat-icon>settings_applications</mat-icon>
-        </button>
-        <button (click)="setActiveState(state)" mat-icon-button>
-          <mat-icon *ngIf="activeState !== state">visibility</mat-icon>
-          <mat-icon *ngIf="activeState === state">visibility_off</mat-icon>
-        </button>
-        <button (click)="deleteState(diagram, state)" mat-icon-button>
-          <mat-icon>delete_sweep</mat-icon>
-        </button>
-      </mat-card-header>
+        </md-card-header-text>
+        <md-button (click)="configState(state)" *ngIf="!isActiveModel" class="md-icon-button">
+          <md-icon>settings_applications</md-icon>
+        </md-button>
+        <md-button (click)="setActiveState(state)" aria-label="hide/show state info" class="md-icon-button">
+          <md-icon *ngIf="activeState !== state">visibility</md-icon>
+          <md-icon *ngIf="activeState === state">visibility_off</md-icon>
+        </md-button>
+        <md-button (click)="deleteState(diagram, state)" class="md-icon-button">
+          <md-icon>delete_sweep</md-icon>
+        </md-button>
+      </md-card-header>
 
-      <mat-card-content ng-hide="activeState != state">
-        <div fxLayout="row" fxLayoutAlign="space-between">
-          <mat-card-actions>
+      <md-card-content [hidden]="activeState != state">
+        <div layout="row" layout-align="space-between">
+          <md-input-container>
             <label> {{ 'state.name' | translate}}</label>
             <input [(ngModel)]="state.name" name="stateName">
-          </mat-card-actions>
+          </md-input-container>
         </div>
 
-        <div *ngIf="!isActiveModel" fxLayout="row" fxLayoutAlign="space-between">
-          <mat-card-actions>
-            <mat-label>{{ 'state.template' | translate }}</mat-label>
-            <div fxLayout="row">
-              <mat-form-field>
-                <mat-select [(ngModel)]="state.template" name="templateName">
-                  <mat-option *ngFor="let partial of partials" [value]="partial">{{partial}}</mat-option>
-                </mat-select>
-                <button (click)="editEndpoints(state)" *ngIf="!isActiveModel" mat-icon-button>
-                  <mat-icon>settings_applications</mat-icon>
-                </button>
-              </mat-form-field>
-            </div>
-          </mat-card-actions>
-          <mat-card-actions *ngIf="isActionState(state)">
+        <div *ngIf="!isActiveModel" layout="row" layout-align="space-between">
+          <md-input-container>
+            <label>{{ 'state.template' | translate }}</label>
+            <md-select [(ngModel)]="state.template" name="templateName">
+              <md-option *ngFor="let partial of partials" ng-value="partial">{{partial}}</md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container *ngIf="isActionState(state)">
             <label>{{ 'state.color' | translate }}</label>
-            <mat-select [(ngModel)]="state.color" name="colorName">
-              <mat-option *ngFor="let color of colors" [value]="color.color">{{color.abbr}}</mat-option>
-            </mat-select>
-          </mat-card-actions>
+            <md-select [(ngModel)]="state.color" name="colorName">
+              <md-option *ngFor="let color of colors" ng-value="color.color">{{color.abbr}}</md-option>
+            </md-select>
+          </md-input-container>
         </div>
 
         <div *ngIf="isActionState(state)">
-          <mat-card class="action-input-container" fxLayout="row">
-            <mat-icon>call_received</mat-icon>
-            <mat-card-actions *ngFor="let input of state.inputContainer">
-              <mat-label>{{input.label}}</mat-label>
-              <input (change)="countFunction(diagram.states, activeState)" [(ngModel)]="input.value" matInput/>
-              matInput>
-            </mat-card-actions>
-            <div fxLayout="column">
-              <button (click)="openContainerDiagram(state, INPUT)"
-                      mat-icon-button>
-                <mat-icon>add</mat-icon>
-              </button>
-              <button (click)="deleteInput(state)"
-                      mat-icon-button>
-                <mat-icon>remove</mat-icon>
-              </button>
+          <md-card class="action-input-container" layout="row">
+            <md-icon>call_received</md-icon>
+            <md-input-container *ngFor="let input of state.inputContainer">
+              <label>{{input.label}}</label>
+              <input [(ngModel)]="input.value" ng-change="countFunction(diagram.states, activeState)"/>
+            </md-input-container>
+            <div layout="column">
+              <md-button (click)="addVariable(state, INPUT)"
+                         class="md-icon-button">
+                <md-icon>add</md-icon>
+              </md-button>
+              <md-button (click)="deleteVariable(state, INPUT)"
+                         class="md-icon-button">
+                <md-icon>remove</md-icon>
+              </md-button>
             </div>
-          </mat-card>
+          </md-card>
 
-          <mat-card *ngIf="isActionState(state)" class="action-input-container" fxLayout="row">
-            <mat-icon>call_made</mat-icon>
-            <mat-card-actions *ngFor="let output of state.outputContainer">
-              <mat-label>{{output.label}}</mat-label>
-              <input [(ngModel)]="output.value" matInput/>
-            </mat-card-actions>
-            <div fxLayout="column">
-              <button (click)="openContainerDiagram(state, OUTPUT)"
-                      mat-icon-button>
-                <mat-icon>add</mat-icon>
-              </button>
-              <button (click)="deleteOutput(state)"
-                      mat-icon-button>
-                <mat-icon>remove</mat-icon>
-              </button>
+          <md-card *ngIf="isActionState(state)" class="action-input-container" layout="row">
+            <md-icon>call_made</md-icon>
+            <md-input-container *ngFor="let output of state.outputContainer">
+              <label>{{output.label}}</label>
+              <input [(ngModel)]="output.value"/>
+            </md-input-container>
+            <div layout="column">
+              <md-button (click)="addVariable(state, OUTPUT)"
+                         class="md-icon-button">
+                <md-icon>add</md-icon>
+              </md-button>
+              <md-button (click)="deleteVariable(state, OUTPUT)"
+                         class="md-icon-button">
+                <md-icon>remove</md-icon>
+              </md-button>
             </div>
-          </mat-card>
+          </md-card>
         </div>
 
-        <div *ngIf="!isActiveModel">
-          <div *ngFor="let source of state.sources; let i = index">
-            <mat-card>
-              <mat-card-header>
-                <mat-card-title>
-                  <div fxLayout="column">
-                    <div class="big-text">Uuid - {{source.uuid}}</div>
-                    <small class="small-text">{{ 'state.source' | translate }}</small>
+        <div *ngIf="!isActiveModel && state.source.connections.length">
+          <div *ngFor="let connection of state.source.connections; let i = index">
+            <md-card>
+              <md-card-header>
+                <md-card-header-text>
+                  <div class="big-text">{{ 'state.connection.self' | translate }} {{connection.uuid}}
                   </div>
-                </mat-card-title>
-                <button (click)="removeIndex(i, state.sources)" mat-icon-button>
-                  <mat-icon>delete_sweep</mat-icon>
-                </button>
-              </mat-card-header>
-              <mat-card-content *ngFor="let connection of source.connections;let i = index">
-                <mat-card>
-                  <mat-card-header>
-                    <mat-card-title>
-                      <div class="big-text">{{ 'state.connection.self' | translate }}</div>
-                    </mat-card-title>
-                    <button (click)="removeIndex(i, source.connections)" mat-icon-button>
-                      <mat-icon>delete_sweep</mat-icon>
-                    </button>
-                  </mat-card-header>
-                  <mat-card-content>
-                    <mat-card-actions>
-                      <mat-label>{{ 'state.connection.condition' | translate }}</mat-label>
-                      <input [value]="connection.isVisible" matInput name="conditionName">
-                    </mat-card-actions>
-                  </mat-card-content>
-                </mat-card>
-              </mat-card-content>
-            </mat-card>
-            >
+                </md-card-header-text>
+                <md-button (click)="removeIndex(i, state.source.connections)" class="md-icon-button">
+                  <md-icon>delete_sweep</md-icon>
+                </md-button>
+              </md-card-header>
+              <md-card-content>
+                <md-input-container>
+                  <label>{{ 'state.connection.condition' | translate }}</label>
+                  <input [(ngModel)]="connection.condition" name="conditionName">
+                </md-input-container>
+              </md-card-content>
+            </md-card>
           </div>
         </div>
-        <div *ngIf="!isActiveModel">
-          <mat-card *ngFor="let target of state.targets; let i = index">
-            <mat-card-header>
-              <mat-card-title>
-                <div fxLayout="column">
-                  <div class="big-text">Uuid - {{target.uuid}}</div>
-                  <small class="small-text">{{ 'state.target' | translate }}</small>
-                </div>
-              </mat-card-title>
-              <button (click)="removeIndex(i, state.targets)" mat-icon-button>
-                <mat-icon>delete_sweep</mat-icon>
-              </button>
-            </mat-card-header>
-          </mat-card>
-        </div>
-      </mat-card-content>
+      </md-card-content>
 
-    </mat-card>
+    </md-card>
 
-  </mat-card-content>
-</mat-card>
+  </md-card-content>
+</md-card>

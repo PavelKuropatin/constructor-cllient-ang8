@@ -9,13 +9,27 @@ import {TranslateModule} from '@ngx-translate/core';
 import {SidenavComponent} from './components/sidenav/sidenav.component';
 import {OpenDiagramComponent} from './components/dialog/open-diagram/open-diagram.component';
 import {MaterialModule} from '../material.module';
+import {AddVariableComponent} from './components/dialog/add-variable/add-variable.component';
+import {DeleteVariableComponent} from './components/dialog/delete-variable/delete-variable.component';
+import {JsplumbCanvasComponent} from './components/jsplumb/jsplumb-canvas/jsplumb-canvas.component';
+import {JsplumbObjectComponent} from './components/jsplumb/jsplumb-object/jsplumb-object.component';
+import {JsplumbConnectionComponent} from './components/jsplumb/jsplumb-connection/jsplumb-connection.component';
+import {JsplumbEndpointComponent} from './components/jsplumb/jsplumb-endpoint/jsplumb-endpoint.component';
+import {SettingsComponent} from './components/settings/settings.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
     SidenavComponent,
-    OpenDiagramComponent
+    OpenDiagramComponent,
+    AddVariableComponent,
+    DeleteVariableComponent,
+    JsplumbCanvasComponent,
+    JsplumbObjectComponent,
+    JsplumbConnectionComponent,
+    JsplumbEndpointComponent,
+    SettingsComponent
   ],
   entryComponents: [
     OpenDiagramComponent

@@ -1,0 +1,62 @@
+<md-card>
+  <md-card-header>
+    <md-card-header-text>
+      <div class="title-text">{{ 'model.settings' | translate }}</div>
+    </md-card-header-text>
+  </md-card-header>
+  <md-card-content>
+    <md-select [(ngModel)]="selectedSourceType" aria-label="source type" name="sourceType">
+      <md-option (value)="source" *ngFor="let source of constants.MODEL">{{source | translate}}</md-option>
+    </md-select>
+    <div ng-switch="selectedSourceType">
+      <md-list ng-switch-when="Generator">
+        <md-list-item>
+          <md-input-container>
+            <label>{{ 'model.interval' | translate }}</label>
+            <input [(ngModel)]="modelingSettings.params.interval"/>
+          </md-input-container>
+          <md-button (click)="addVariable()">+</md-button>
+        </md-list-item>
+        <md-list-item *ngFor="let _var of modelingSettings.vars; let i = index">
+          <md-input-container>
+            <label>{{'model.generator.var_name' | translate }}</label>
+            <input [(ngModel)]="_var.name"/>
+          </md-input-container>
+          <md-input-container>
+            <label>{{'model.generator.var_start' | translate }}</label>
+            <input [(ngModel)]="_var.startValue"/>
+          </md-input-container>
+          <md-input-container>
+            <label>{{'model.generator.var_step' | translate }}</label>
+            <input [(ngModel)]="_var.stepValue"/>
+          </md-input-container>
+          <md-button (click)="deleteVariable(i)">-</md-button>
+        </md-list-item>
+      </md-list>
+      <md-list ng-switch-when="Socket">
+        <md-list-item>
+          <md-input-container>
+            <label>{{ 'model.socket.host' | translate }}</label>
+            <input [(ngModel)]="modelingSettings.params.host"/>
+          </md-input-container>
+          <md-input-container>
+            <label>{{ 'model.socket.port' | translate }}</label>
+            <input [(ngModel)]="modelingSettings.params.port"/>
+          </md-input-container>
+          <md-input-container>
+            <label>{{ 'model.interval' | translate }}</label>
+            <input [(ngModel)]="modelingSettings.interval"/>
+          </md-input-container>
+        </md-list-item>
+      </md-list>
+    </div>
+  </md-card-content>
+  <md-input-container>
+    <md-button (click)="apply()">
+      {{'apply' | translate }}
+    </md-button>
+    <md-button (click)="cancel()">
+      {{'close' | translate }}
+    </md-button>
+  </md-input-container>
+</md-card>

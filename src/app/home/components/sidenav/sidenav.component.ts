@@ -6,7 +6,8 @@ import CONSTANTS from '../../../config/business-constants';
 import {ContainerType} from '../../../domain/container-type.enum';
 import {MatDialog} from '@angular/material/dialog';
 import {Variable} from '../../../domain/variable';
-import {OpenDiagramComponent} from '../dialog/open-diagram/open-diagram.component';
+import {AddVariableComponent} from '../dialog/add-variable/add-variable.component';
+import {DeleteVariableComponent} from '../dialog/delete-variable/delete-variable.component';
 
 @Component({
   selector: 'app-sidenav',
@@ -19,37 +20,24 @@ export class SidenavComponent implements OnInit {
   @Input() activeState: State;
   @Input() isActiveSetting: boolean;
   @Input() isActiveModel: object;
-  partials = Object.values(CONSTANTS.PARTIALS);
-  colors = Object.values(CONSTANTS.TYPE_ACTION);
-  INPUT = ContainerType.INPUT;
-  OUTPUT = ContainerType.OUTPUT;
+  partials: string[];
+  colors: object;
+  INPUT: ContainerType;
+  OUTPUT: ContainerType;
 
   constructor(private objectService: ObjectService,
               private matDialog: MatDialog) {
   }
 
-  removeIndex(index: number, states: State[]) {
-    this.objectService.removeIndex(index, states);
+  ngOnInit() {
+    this.partials = Object.values(CONSTANTS.PARTIALS);
+    this.colors = Object.values(CONSTANTS.TYPE_ACTION);
+    this.INPUT = ContainerType.INPUT;
+    this.OUTPUT = ContainerType.OUTPUT;
   }
 
-  countFunction(state: State, states: State[]) {
-    this.objectService.countFunction(states, state);
-  }
-
-  deleteDiagram(diagram) {
-    this.objectService.deleteDiagram(diagram);
-  }
-
-  createNewState(diagram: Diagram) {
-    return this.objectService.createState(diagram);
-  }
-
-  deleteState(diagram: Diagram, state: State) {
-    this.objectService.deleteState(diagram, state);
-  }
-
-  openContainerDiagram(state: State, type: ContainerType) {
-    const dialogRef = this.matDialog.open(OpenDiagramComponent);
+  addVariable(state: State, type: ContainerType) {
+    const dialogRef = this.matDialog.open(AddVariableComponent);
 
     dialogRef.afterClosed().subscribe((variable: Variable) => {
       variable.type = type;
@@ -76,46 +64,13 @@ export class SidenavComponent implements OnInit {
     setTimeout(() => this.diagram.states = bufferedStates);
   }
 
-  editEndpoints(state) {
-    // const dialogRef = this.matDialog.open();
-    // dialogRef.afterClosed().subscribe(endpointStyle =>
-    //   state.endpointStyle = endpointStyle;
-    // this.refreshStates();
-
-    // $mdDialog.show({
-    //   locals: { endpointStyle: state.endpointStyle },
-    //   controller: 'editEndpointsLayoutController as vm',
-    //   template: editEndpointsLayoutTemplate,
-    //   clickOutsideToClose: true
-    // });
-  }
-
-  deleteInput(state: State) {
-    // const dialogRef = this.matDialog.open();
-    // dialogRef.afterClosed().subscribe(param => {
-    //   const tmpVar: Variable = {label: param, type: ContainerType.INPUT, value: 0, function: ''};
-    //   this.objectService.deleteVariable(state, tmpVar);
-    // });
-    // $mdDialog.show({
-    //   locals: {container: state.inputContainer},
-    //   controller: 'delContainerController as vm',
-    //   template: delContainerTemplate,
-    //   clickOutsideToClose: true
-    // });
-  }
-
-  deleteOutput(state: State) {
-    // const dialogRef = this.matDialog.open();
-    // dialogRef.afterClosed().subscribe(param => {
-    //   const tmpVar: Variable = {label: param, type: ContainerType.OUTPUT, value: 0, function: ''};
-    //   this.objectService.deleteVariable(state, tmpVar);
-    // });
-    // $mdDialog.show({
-    //   locals: {container: state.outputContainer},
-    //   controller: 'delContainerController as vm',
-    //   template: delContainerTemplate,
-    //   clickOutsideToClose: true
-    // });
+  deleteVariable(state: State, type: ContainerType) {
+    const dialogRef = this.matDialog.open(DeleteVariableComponent, {
+      data: type === ContainerType.INPUT ? state.inputContainer : state.outputContainer
+    });
+    dialogRef.afterClosed().subscribe((variable: Variable) => {
+      this.objectService.deleteVariable(state, variable);
+    });
   }
 
   configState(state) {
@@ -124,7 +79,21 @@ export class SidenavComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+
+  removeIndex(index: number, objects: object[]) {
+    this.objectService.removeIndex(index, objects);
+  }
+
+  countFunction(states: State[], state: State) {
+    this.objectService.countFunction(states, state);
+  }
+
+  createNewState(diagram: Diagram) {
+    return this.objectService.createState(diagram);
+  }
+
+  deleteState(diagram: Diagram, state: State) {
+    this.objectService.deleteState(diagram, state);
   }
 
 }

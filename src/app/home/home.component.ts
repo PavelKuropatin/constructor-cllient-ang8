@@ -9,6 +9,8 @@ import {ObjectService} from './services/object.service';
 import {JsPlumbStyleService} from './services/js-plumb-style.service';
 import {State} from '../domain/state';
 import {OpenDiagramComponent} from './components/dialog/open-diagram/open-diagram.component';
+import {Connection} from '../domain/connection';
+import {Target} from '../domain/target';
 
 @Component({
   selector: 'app-home',
@@ -34,16 +36,16 @@ export class HomeComponent implements OnInit {
     private mdDialog: MatDialog,
     private jsPlumbStyleService: JsPlumbStyleService
   ) {
+    this.translate.setDefaultLang('en');
   }
 
   ngOnInit() {
-    this.translate.setDefaultLang('en');
     this.zoomLevel = 64;
     this.targetEndpointStyle1 = this.jsPlumbStyleService.getTargetEndpointStyle1();
     this.targetEndpointStyle2 = this.jsPlumbStyleService.getTargetEndpointStyle2();
     this.sourceEndpointStyle1 = this.jsPlumbStyleService.getSourceEndpointStyle1();
     this.sourceEndpointStyle2 = this.jsPlumbStyleService.getSourceEndpointStyle2();
-    this.isActiveSetting = true;
+    this.isActiveSetting = false;
   }
 
   goToModeling() {
@@ -54,15 +56,13 @@ export class HomeComponent implements OnInit {
     this.activeState = state;
   }
 
-  onConnection(instance, connection, outTarget, outSource) {
+  onConnection(instance, connection: Connection, targetUuid: string, sourceUuid: string) {
     this.diagram.states.forEach(state => {
-      state.sources.forEach(source => {
-        if (source === outSource) {
-          source.connections.push({uuid: outTarget, isVisible: true});
-        }
-      });
+      if (state.source.uuid === sourceUuid) {
+        state.source.connections.push(new Connection(new Target(targetUuid), true));
+      }
     });
-    this.objectService.updateContainer(this.diagram.states, outSource, outTarget);
+    this.objectService.updateContainer(this.diagram.states, sourceUuid, targetUuid);
     this.updateDiagram();
   }
 

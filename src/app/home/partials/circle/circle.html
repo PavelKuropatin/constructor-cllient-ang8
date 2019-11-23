@@ -1,0 +1,28 @@
+<js-plumb-object class="circle-state"
+                 ng-click="vm.setActiveState(state)"
+                 ng-style="{ 'left':state.x, 'top':state.y }"
+                 state-object="state">
+  <md-input-container class="circle-state-top-container">
+    <label>v5</label>
+    <input ng-model="state.v5"/>
+  </md-input-container>
+  <md-input-container class="circle-state-bottom-container">
+    <label>v6</label>
+    <input ng-model="state.v6"/>
+  </md-input-container>
+  <js-plumb-endpoint anchor="RightMiddle"
+                     class="{{state.endpointStyle.sourceEndpoint}}"
+                     ng-repeat="endpoint in state.sources"
+                     settings="vm.sourceEndpointStyle"
+                     uuid="{{endpoint.uuid}}">
+    <js-plumb-connection ng-click="setActiveConnection($index)"
+                         ng-model="connection"
+                         ng-repeat="connection in endpoint.connections">
+    </js-plumb-connection>
+  </js-plumb-endpoint>
+  <js-plumb-endpoint anchor="LeftMiddle"
+                     class="{{state.endpointStyle.targetEndpoint}}"
+                     ng-repeat="endpoint in state.targets"
+                     settings="vm.targetEndpointStyle"
+                     uuid="{{endpoint.uuid}}"></js-plumb-endpoint>
+</js-plumb-object>

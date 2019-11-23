@@ -4,5 +4,14 @@ export class Variable {
   label: string;
   value: number;
   type: ContainerType;
-  function: string;
+  expression: string;
+
+
+  constructor(label: string, value: number, type?: ContainerType, expression?: string) {
+    this.label = label;
+    this.value = value;
+    this.type = type;
+    this.expression = expression;
+  }
+
 }

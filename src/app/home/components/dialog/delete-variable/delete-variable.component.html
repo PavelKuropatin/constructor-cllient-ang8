@@ -1,0 +1,19 @@
+<md-card>
+  <md-card-header>
+    <md-card-header-text>
+      <div class="title-text">{{ 'param.delete' | translate }}</div>
+    </md-card-header-text>
+  </md-card-header>
+  <md-card-content>
+    <md-input-container *ngFor="let variable of variables">
+      <md-button (click)="apply(variable)" style="text-transform:none">
+        {{ variable.label }}
+      </md-button>
+    </md-input-container>
+  </md-card-content>
+  <md-input-container>
+    <md-button (click)="cancel()">
+      {{ 'close' | translate}}
+    </md-button>
+  </md-input-container>
+</md-card>

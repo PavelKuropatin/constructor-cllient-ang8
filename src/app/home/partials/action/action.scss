@@ -1,0 +1,42 @@
+.action-state {
+  border-radius: 0.5em;
+  text-align: center;
+  z-index: 10;
+  position: absolute;
+  background-color: #eeeeef;
+  color: black;
+  font-family: helvetica;
+  padding: 0.5em;
+  font-size: 0.9em;
+  width: 250px;
+}
+
+.action-input-container {
+  height: 70px;
+}
+
+.endpoint-style-right {
+  position: absolute;
+  top: 50%;
+  right: -10px;
+}
+
+.endpoint-style-left {
+  position: absolute;
+  top: 50%;
+  left: -10px;
+}
+
+
+.endpoint-style-top {
+  position: absolute;
+  left: 50%;
+  top: -10px;
+}
+
+.endpoint-style-bottom {
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+}
+

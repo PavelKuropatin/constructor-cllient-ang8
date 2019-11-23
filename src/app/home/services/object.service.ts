@@ -80,7 +80,7 @@ export class ObjectService {
       this.applyParentContainer(parentState.outputContainer, state.inputContainer);
     });
     state.outputContainer.forEach(container => {
-      let bufFunction = container.function.trim();
+      let bufFunction = container.expression.trim();
       state.inputContainer.forEach(item => {
         bufFunction = bufFunction.replace(new RegExp(item.label, 'g'), item.value.toString());
       });

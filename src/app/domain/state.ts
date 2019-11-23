@@ -1,6 +1,8 @@
 import {Variable} from './variable';
 import {Source} from './source';
 import {Target} from './target';
+import {Style} from './style';
+import {Settings} from './settings';
 
 export class State {
   uuid: string;
@@ -9,8 +11,10 @@ export class State {
   color: string;
   inputContainer: Variable[];
   outputContainer: Variable[];
-  sources: Source[];
-  targets: Target[];
+  style: Style;
+  source: Source;
+  target: Target;
+  settings: Settings;
   x: number;
   y: number;
 }

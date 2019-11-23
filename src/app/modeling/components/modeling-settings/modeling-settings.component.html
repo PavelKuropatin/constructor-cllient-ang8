@@ -1,0 +1,75 @@
+<md-card class="action-input-container" layout="row">
+  <md-icon>call_received</md-icon>
+  <md-input-container *ngFor="let input of state.inputContainer">
+    <label>{{input.label}}</label>
+    <input [(ngModel)]="input.value" disabled/>
+  </md-input-container>
+</md-card>
+
+<md-card class="action-input-container" layout="row">
+  <md-icon>call_made</md-icon>
+  <md-input-container *ngFor="let output of state.outputContainer">
+    <label>{{output.label}}</label>
+    <input [(ngModel)]="output.value" disabled/>
+  </md-input-container>
+</md-card>
+
+<md-card layout="column">
+  <md-card *ngFor="let output of state.outputContainer">
+    <md-card-header>
+      <md-icon>call_made</md-icon>
+      {{output.label}}
+    </md-card-header>
+    <md-content>
+      <md-input-container>
+        <label>{{ 'function.enter' | translate }}</label>
+        <input (change)="countFunction([], state)" [(ngModel)]="output.expression" disabled/>
+      </md-input-container>
+      <md-input-container>
+        <label>{{ 'function.result' | translate }}</label>
+        <input [(ngModel)]="output.value" disabled/>
+      </md-input-container>
+    </md-content>
+  </md-card>
+</md-card>
+
+<md-card [(ngModel)]="state.settings.actions" class="connectedItems" layout="column" ui-sortable="sortableOptions"
+         ui-sortable-stop="refreshNumbers()">
+  <md-card *ngFor="let action of state.settings.actions">
+    <md-content>
+      <div layout="row" layout-align="space-between center" style="padding:5px">
+        <div class="number">#{{action.number}}</div>
+        <md-input-container>
+          <label>condition</label>
+          <input [(ngModel)]="action.condition"/>
+        </md-input-container>
+        <md-select [(ngModel)]="action.type">
+          <md-option (value)="a" *ngFor="let a of actions">
+            {{a}}
+          </md-option>
+        </md-select>
+        <md-input-container>
+          <label>value</label>
+          <input [(ngModel)]="action.value"/>
+        </md-input-container>
+        <md-button (click)="deleteSettingsAction(action.uuid)"
+                   class="md-table-action">
+          <span class="material-icons md-18">delete_forever</span>
+        </md-button>
+      </div>
+    </md-content>
+  </md-card>
+  <div layout="row" layout-align="space-between center">
+    <md-input-container class="no-margin">
+      <md-button (click)="apply()">
+        Apply
+      </md-button>
+    </md-input-container>
+    <md-input-container class="no-margin">
+      <md-button (click)="addSettingsAction(state.uuid)">
+        Add
+      </md-button>
+    </md-input-container>
+  </div>
+</md-card>
+
