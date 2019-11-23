@@ -29,6 +29,10 @@ export class ObjectHttpService {
     this.http.delete(`${this.diagramUrl}/${diagramUuid}/state/${stateUuid}`);
   }
 
+  createState(diagramUuid: string): Observable<State> {
+    return this.http.post<State>(`${this.diagramUrl}/${diagramUuid}/state`, {});
+  }
+
   getDiagrams(): Observable<Diagram[]> {
     return this.http.get<Diagram[]>(this.diagramUrl);
   }

@@ -62,8 +62,8 @@ export class ObjectService {
   }
 
   updateContainer(states: State[], sourceUuid: string, targetUuid: string) {
-    const inputContainer = this.findTargetState(states, targetUuid).inputContainer;
-    this.findSourceState(states, sourceUuid).outputContainer
+    const inputContainer = this.findStateByTarget(states, targetUuid).inputContainer;
+    this.findStateBySource(states, sourceUuid).outputContainer
       .forEach(oVar => {
         const tmpVar = inputContainer.find(iVar => iVar.label === oVar.label);
         if (tmpVar) {
@@ -75,7 +75,7 @@ export class ObjectService {
   }
 
   countFunction(states: State[], state: State) {
-    const parentStates = this.getParentStates(states, state.targets);
+    const parentStates = this.getParentStates(states, state.target);
     parentStates.forEach(parentState => {
       this.applyParentContainer(parentState.outputContainer, state.inputContainer);
     });
@@ -92,21 +92,18 @@ export class ObjectService {
     });
   }
 
-  private findSourceState(states: State[], sourceUuid: string): State {
-    return states.find(state => state.sources[0].uuid === sourceUuid);
+  private findStateBySource(states: State[], sourceUuid: string): State {
+    return states.find(state => state.source.uuid === sourceUuid);
   }
 
-  private findTargetState(states: State[], targetUuid: string): State {
-    return states.find(state => state.targets[0].uuid === targetUuid);
+  private findStateByTarget(states: State[], targetUuid: string): State {
+    return states.find(state => state.target.uuid === targetUuid);
   }
 
-  private getParentStates(states: State[], targets: Target[]) {
+  private getParentStates(states: State[], target: Target) {
     return states.filter(state => {
-      return state.sources.find(source => {
-        return source.connections.find(connection => targets.includes(connection.uuid));
-      });
+      return state.source.connections.find(connection => connection.uuid === target);
     });
-
   }
 
   private applyParentContainer(parentContainer: Variable[], childContainer: Variable[]) {

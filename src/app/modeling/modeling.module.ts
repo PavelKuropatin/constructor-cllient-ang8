@@ -6,7 +6,6 @@ import {ModelingComponent} from './modeling.component';
 import {StartCountComponent} from './components/dialog/start-count/start-count.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule} from '@angular/forms';
-import {OpenSettingsComponent} from './components/dialog/open-settings/open-settings.component';
 import {ModelingSidenavComponent} from './components/modeling-sidenav/modeling-sidenav.component';
 import {ModelingSettingsComponent} from './components/modeling-settings/modeling-settings.component';
 import {ModelingJsplumbCanvasComponent} from './components/jsplumb/modeling-jsplumb-canvas/modeling-jsplumb-canvas.component';
@@ -19,7 +18,6 @@ import {ModelingJsplumbConnectionComponent} from './components/jsplumb/modeling-
   declarations: [
     ModelingComponent,
     StartCountComponent,
-    OpenSettingsComponent,
     ModelingSidenavComponent,
     ModelingSettingsComponent,
     ModelingJsplumbCanvasComponent,

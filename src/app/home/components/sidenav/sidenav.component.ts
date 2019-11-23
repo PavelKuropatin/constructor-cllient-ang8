@@ -50,7 +50,7 @@ export class SidenavComponent implements OnInit {
       this.activeState = null;
     } else {
       this.activeState = state;
-      this.countFunction(this.activeState, this.diagram.states);
+      this.countFunction(this.diagram.states, this.activeState);
     }
   }
 
