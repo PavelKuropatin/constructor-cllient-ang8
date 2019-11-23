@@ -40,6 +40,7 @@ export class ModelingComponent implements OnInit {
   imageToLoad: object;
   modelingSettings: ModelingSettings;
   cmdUuid: string;
+  // @ts-ignore
   timer: NodeJS.Timer; // ??? NodeJS.Timer;
 
   constructor(
