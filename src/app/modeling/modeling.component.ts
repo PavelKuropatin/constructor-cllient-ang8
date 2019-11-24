@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Diagram} from '../domain/diagram';
 import {State} from '../domain/state';
 import {Router} from '@angular/router';
@@ -23,7 +23,8 @@ import {ModelingJsPlumbStyleService} from './services/modeling-js-plumb-style.se
 @Component({
   selector: 'app-modeling',
   templateUrl: './modeling.component.html',
-  styleUrls: ['./modeling.component.scss']
+  styleUrls: ['./modeling.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ModelingComponent implements OnInit {
   diagram: Diagram;
@@ -35,7 +36,7 @@ export class ModelingComponent implements OnInit {
   sourceEndpointStyle2: object;
   sortableOptions: object;
   isActiveSetting: boolean;
-  movedStates: { states: State[] };
+  movedStates: Diagram;
   backgroundImg: any;
   imageToUpload: object;
   modelingSettings: ModelingSettings;
@@ -63,13 +64,12 @@ export class ModelingComponent implements OnInit {
     this.targetEndpointStyle2 = this.modelingJsPlumbStyleService.getTargetEndpointStyle2();
     this.sourceEndpointStyle1 = this.modelingJsPlumbStyleService.getSourceEndpointStyle1();
     this.sourceEndpointStyle2 = this.modelingJsPlumbStyleService.getSourceEndpointStyle2();
-    this.isActiveSetting = true;
+    this.isActiveSetting = false;
     this.sortableOptions = {
       connectWith: '.connectedItems'
     };
-    this.movedStates = {states: []};
+    this.movedStates = new Diagram([]);
     this.imageToUpload = null;
-    console.log(CONSTANTS);
 
   }
 
@@ -176,8 +176,8 @@ export class ModelingComponent implements OnInit {
       });
   }
 
-  changeLanguage(lang: string) {
-    this.translate.use(lang);
+  changeLanguage(language: string) {
+    this.translate.use(language);
   }
 
   stopCount() {

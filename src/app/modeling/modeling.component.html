@@ -1,95 +1,89 @@
-<div fxLayout="column">
-  <div class="model-container" fxLayout="row">
+<div fxLayout="row">
+  <div class="schema-container" fxLayout="row">
     <div *ngIf="diagram" class="sidenav-container" fxFlex="25">
-      <app-modeling-sidenav active-state="vm.activeState" diagram="vm.diagram" editable="false"
-                            refresh="vm.refresh"></app-modeling-sidenav>
-      <app-modeling-sidenav active-state="vm.activeState" change-visibility="vm.inverseConnectionVisibility"
-                            diagram="vm.movedStates"
-                            editable="true" is-active-setting="vm.isActiveSetting"
-                            is-active-state="vm.isActiveState" refresh="vm.refresh"
-                            set-active-state="vm.setActiveState">
+      <!--        <app-modeling-sidenav [activeState]="activeState" [diagram]="diagram" [editable]="false"></app-modeling-sidenav>-->
+      <app-modeling-sidenav [activeState]="activeState" [diagram]="movedStates" [editable]="true"
+                            [isActiveSettings]="isActiveSetting"
+                            [isActiveState]="isActiveState" [setActiveState]="setActiveState">
       </app-modeling-sidenav>
     </div>
 
     <div *ngIf="!isActiveSetting" class="schema-container" fxFlex>
-      <mat-toolbar class="md-hue-2">
-        <div class="md-toolbar-tools" fxLayout="row" fxLayoutAlign="space-between center">
-          <div class="md-menu-demo">
-            <div class="menu-demo-container" fxLayout="column" fxLayoutAlign="center center">
-              <button [matMenuTriggerFor]="diagram_menu" aria-label="Example icon-button with a menu" mat-icon-button>
-                <mat-icon>menu</mat-icon>
-              </button>
-              <mat-menu #diagram_menu="matMenu">
-                <button (click)="openDiagram()" mat-menu-item>
-                  {{ 'diagram.open' | translate }}
-                </button>
-              </mat-menu>
-            </div>
-          </div>
-
-          <button (click)="openModelingSettings()" mat-raised-button> {{ 'model.start' | translate }}
+      <mat-toolbar color="primary" fxLayoutAlign="space-between center">
+        <mat-toolbar-row>
+          <button [matMenuTriggerFor]="diagram_menu" aria-label="" mat-icon-button>
+            <mat-icon>menu</mat-icon>
           </button>
+          <mat-menu #diagram_menu="matMenu">
+            <button (click)="openDiagram()" mat-menu-item>
+              {{ 'diagram.open' | translate }}
+            </button>
+          </mat-menu>
+        </mat-toolbar-row>
+        <mat-toolbar-row>
+          <button (click)="openModelingSettings()" mat-raised-button> {{ 'model.start' | translate }}</button>
+        </mat-toolbar-row>
+        <mat-toolbar-row>
           <button (click)="stopCount()" mat-raised-button>{{ 'model.stop' | translate }}</button>
-
+        </mat-toolbar-row>
+        <mat-toolbar-row>
           <button (click)="goToSchema()" mat-raised-button>{{ 'schema.self' | translate }}</button>
-
+        </mat-toolbar-row>
+        <mat-toolbar-row>
           <mat-slider [(ngModel)]="zoomLevel" aria-label="red" class="md-warn" id="red-slider" max="200"
                       min="10"
                       step="10">
           </mat-slider>
+        </mat-toolbar-row>
 
-          <div class="md-menu-demo">
-            <div class="menu-demo-container" fxLayout="column" fxLayoutAlign="center right">
-              <button [matMenuTriggerFor]="language_menu" mat-icon-button>
-                <mat-icon>language</mat-icon>
-              </button>
-              <mat-menu #language_menu="matMenu">
-                <button (click)="changeLanguage('en')" mat-menu-item>
-                  {{ 'language.en' | translate }}
-                </button>
-                <button (click)="changeLanguage('ru')" mat-menu-item>
-                  {{ 'language.ru' | translate }}  </button>
-              </mat-menu>
-            </div>
-          </div>
-
-        </div>
+        <mat-toolbar-row fxLayoutAlign="end center">
+          <button [matMenuTriggerFor]="language_menu" mat-icon-button>
+            <mat-icon>language</mat-icon>
+          </button>
+          <mat-menu #language_menu="matMenu">
+            <button (click)="changeLanguage('en')" mat-menu-item>
+              {{ 'language.en' | translate }}
+            </button>
+            <button (click)="changeLanguage('ru')" mat-menu-item>
+              {{ 'language.ru' | translate }}  </button>
+          </mat-menu>
+        </mat-toolbar-row>
       </mat-toolbar>
 
       <div class="model" fxLayout="row">
-        <app-modeling-jsplumb-canvas id="container" image="vm.backgroundImg"
-                                     x="vm.pos_x" y="vm.pos_y"
-                                     zoom="vm.zoomlevel">
-          <!--          <ng-include *ngFor="let state of movedStates.states" src="state.template"></ng-include>-->
-        </app-modeling-jsplumb-canvas>
+        <!--        <app-modeling-jsplumb-canvas id="container" image="backgroundImg"-->
+        <!--                                     x="pos_x" y="pos_y"-->
+        <!--                                     zoom="zoomlevel">-->
+        <!--                    <ng-include *ngFor="let state of movedStates.states" src="state.template"></ng-include>-->
+        <!--        </app-modeling-jsplumb-canvas>-->
       </div>
     </div>
 
     <app-modeling-settings *ngIf="isActiveSetting" fxFlex="75"></app-modeling-settings>
   </div>
 
-
-  <footer>
-    <mat-toolbar class="md-scroll-shrink">
-
-      <mat-toolbar-row>
-        <button aria-label="load canvas background image" mat-button>
-          <input (change)="onFilesSelect($event.target.files)" style="display: none" type="file"/>
-          <mat-icon (click)="selectImage()">image</mat-icon>
-        </button>
-      </mat-toolbar-row>
-
-      <mat-toolbar-row>
-        <button aria-label="refresh connections" mat-button>
-          <mat-icon (click)="refreshStates()">refresh</mat-icon>
-        </button>
-      </mat-toolbar-row>
-
-      <mat-toolbar-row>
-        <button aria-label="refresh connections" mat-button>
-          <mat-icon (click)="uploadImage()">cloud_upload</mat-icon>
-        </button>
-      </mat-toolbar-row>
-    </mat-toolbar>
-  </footer>
 </div>
+
+<footer>
+  <mat-toolbar fxLayout="row" fxLayoutAlign="start center">
+
+    <mat-toolbar-row>
+      <button aria-label="load canvas background image" mat-button>
+        <input (change)="onFilesSelect($event.target.files)" style="display: none" type="file"/>
+        <mat-icon (click)="selectImage()">image</mat-icon>
+      </button>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row>
+      <button aria-label="refresh connections" mat-button>
+        <mat-icon (click)="refreshStates()">refresh</mat-icon>
+      </button>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row>
+      <button aria-label="refresh connections" mat-button>
+        <mat-icon (click)="uploadImage()">cloud_upload</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</footer>

@@ -5,4 +5,8 @@ export class Diagram {
   name: string;
   description: string;
   states: State[];
+
+  constructor(states: State[]) {
+    this.states = states;
+  }
 }

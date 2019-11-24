@@ -35,7 +35,6 @@ export class HomeComponent implements OnInit {
     private dialog: MatDialog,
     private jsPlumbStyleService: JsPlumbStyleService
   ) {
-    this.translate.setDefaultLang('en');
   }
 
   ngOnInit() {
@@ -89,7 +88,7 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  changeLanguage(language) {
+  changeLanguage(language: string) {
     this.translate.use(language);
   }
 }

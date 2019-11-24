@@ -28,8 +28,9 @@ export class ModelingSettingsComponent implements OnInit {
     this.icons = Object.keys(CONSTANTS.ENDPOINT_LAYOUTS);
     this.state = this.objectService.getConfigState();
     this.countFunction = this.objectService.countFunction;
+    console.log(this.state);
     this.sourceLayout = this.getByAnchor(this.state.style.sourceAnchor);
-    this.targetLayout = this.getByAnchor(this.state.style.targetEndpoint);
+    this.targetLayout = this.getByAnchor(this.state.style.targetAnchor);
   }
 
   apply() {

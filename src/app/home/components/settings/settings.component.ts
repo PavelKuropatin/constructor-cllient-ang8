@@ -12,7 +12,6 @@ import CONSTANTS from '../../../config/business-constants';
 export class SettingsComponent implements OnInit {
   private icons: string[];
   private state: State;
-  private countFunction: (states: State[], state: State) => any;
   private sourceLayout: string;
   private targetLayout: string;
 
@@ -22,13 +21,17 @@ export class SettingsComponent implements OnInit {
   ) {
   }
 
+  countFunction(states: State[], state: State) {
+    console.log('change');
+    this.objectService.countFunction(states, state);
+  }
+
   ngOnInit() {
     this.icons = Object.keys(CONSTANTS.ENDPOINT_LAYOUTS);
     this.state = this.objectService.getConfigState();
     console.log(this.state);
-    this.countFunction = this.objectService.countFunction;
     this.sourceLayout = this.getByAnchor(this.state.style.sourceAnchor);
-    this.targetLayout = this.getByAnchor(this.state.style.targetEndpoint);
+    this.targetLayout = this.getByAnchor(this.state.style.targetAnchor);
   }
 
   apply() {

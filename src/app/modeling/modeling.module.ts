@@ -13,6 +13,8 @@ import {ModelingJsplumbObjectComponent} from './components/jsplumb/modeling-jspl
 import {ModelingJsplumbEndpointComponent} from './components/jsplumb/modeling-jsplumb-endpoint/modeling-jsplumb-endpoint.component';
 import {ModelingJsplumbConnectionComponent} from './components/jsplumb/modeling-jsplumb-connection/modeling-jsplumb-connection.component';
 import {MaterialModule} from '../material.module';
+import {HttpClientModule} from '@angular/common/http';
+import {OpenDiagramComponent} from '../home/components/dialog/open-diagram/open-diagram.component';
 
 
 @NgModule({
@@ -26,9 +28,15 @@ import {MaterialModule} from '../material.module';
     ModelingJsplumbEndpointComponent,
     ModelingJsplumbConnectionComponent
   ],
+  entryComponents: [
+    OpenDiagramComponent,
+    ModelingSettingsComponent
+  ],
   imports: [
     CommonModule,
+    FormsModule,
     MaterialModule,
+    HttpClientModule,
     ModelingRoutingModule,
     TranslateModule,
     FormsModule

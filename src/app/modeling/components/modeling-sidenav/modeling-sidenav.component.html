@@ -1,6 +1,9 @@
+<!--todo fix ???-->
 <mat-card class="model-sidenav">
-  <mat-card-content [(ngModel)]="diagram.states" class="connectedItems" ui-sortable="sortableOptions"
-                    ui-sortable-update="refresh()">
+  <mat-card-content [(ngModel)]="diagram.states" class="connectedItems">
+    <!--todo connect sortable-->
+    <!--                    ui-sortable="sortableOptions"-->
+    <!--                    ui-sortable-update="refresh()"-->
     <mat-card (click)="setActiveState(state)" *ngFor="let state of diagram.states">
       <mat-card-header>
         <mat-card-title>
@@ -9,7 +12,7 @@
             <span class="medium-text">
                             {{ 'state.position' | translate }}: [{{state.x| number}}, {{state.y| number}}]
                         </span>
-            <button (click)="showStateSettings(state)" *ngIf="editable" class="" mat-icon-button>
+            <button (click)="showStateSettings(state)" *ngIf="editable" mat-icon-button>
               <mat-icon>settings_applications</mat-icon>
             </button>
           </div>
