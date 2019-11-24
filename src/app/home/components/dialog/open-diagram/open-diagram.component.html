@@ -4,35 +4,25 @@
     <mat-card-title>{{ 'diagram.choose' | translate }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <table class="mat-table">
-      <thead>
-      <tr>
-        <th class="mat-table-header">
-          {{ 'diagram.name' | translate }}
-        </th>
-        <th class="mat-table-header">{{'diagram.action' | translate }}</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      <tr (click)="setDiagramToLoad(diagram.uuid)"
-          *ngFor="let diagram of diagrams"
-          [ngClass]="{'selected-background' : diagram.uuid == chosenUuid }">
-
-        <td>
-          <div class="mat-table-content">
-            {{ diagram.name }}
-          </div>
-        </td>
-
-        <td>
+    <mat-table [dataSource]="diagrams" class="mat-elevation-z8">
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
+        <mat-cell *matCellDef="let diagram"> {{diagram.name}} </mat-cell>
+      </ng-container>
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
+        <mat-cell *matCellDef="let diagram">
           <button (click)="deleteDiagram(diagram.uuid)" class="mat-table-action" mat-button>
             <span class="material-icons mat-18">delete_forever</span>
           </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
   </mat-card-content>
 
   <mat-card-actions>

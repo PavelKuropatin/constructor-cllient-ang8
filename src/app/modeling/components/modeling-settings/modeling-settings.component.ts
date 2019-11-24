@@ -7,7 +7,7 @@ import {ObjectHttpService} from '../../../home/services/object-http.service';
 @Component({
   selector: 'app-modeling-settings',
   templateUrl: './modeling-settings.component.html',
-  styleUrls: ['./modeling-settings.component.css']
+  styleUrls: ['./modeling-settings.component.scss']
 })
 export class ModelingSettingsComponent implements OnInit {
   private actions: string[];

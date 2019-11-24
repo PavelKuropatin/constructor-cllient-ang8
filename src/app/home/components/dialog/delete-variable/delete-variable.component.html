@@ -1,19 +1,17 @@
-<md-card>
-  <md-card-header>
-    <md-card-header-text>
-      <div class="title-text">{{ 'param.delete' | translate }}</div>
-    </md-card-header-text>
-  </md-card-header>
-  <md-card-content>
-    <md-input-container *ngFor="let variable of variables">
-      <md-button (click)="apply(variable)" style="text-transform:none">
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ 'param.delete' | translate }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngFor="let variable of variables">
+      <button (click)="apply(variable)" mat-raised-button style="text-transform:none">
         {{ variable.label }}
-      </md-button>
-    </md-input-container>
-  </md-card-content>
-  <md-input-container>
-    <md-button (click)="cancel()">
+      </button>
+    </div>
+  </mat-card-content>
+  <div>
+    <button (click)="cancel()" mat-raised-button>
       {{ 'close' | translate}}
-    </md-button>
-  </md-input-container>
-</md-card>
+    </button>
+  </div>
+</mat-card>

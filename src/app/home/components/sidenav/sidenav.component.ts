@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {Diagram} from '../../../domain/diagram';
 import {State} from '../../../domain/state';
 import {ObjectService} from '../../services/object.service';
@@ -8,11 +8,13 @@ import {MatDialog} from '@angular/material/dialog';
 import {Variable} from '../../../domain/variable';
 import {AddVariableComponent} from '../dialog/add-variable/add-variable.component';
 import {DeleteVariableComponent} from '../dialog/delete-variable/delete-variable.component';
+import {HomeComponent} from '../../home.component';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.css']
+  styleUrls: ['./sidenav.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SidenavComponent implements OnInit {
 
@@ -25,8 +27,9 @@ export class SidenavComponent implements OnInit {
   INPUT: ContainerType;
   OUTPUT: ContainerType;
 
-  constructor(private objectService: ObjectService,
-              private matDialog: MatDialog) {
+  constructor(@Inject(HomeComponent) private parent: HomeComponent,
+              private objectService: ObjectService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -37,10 +40,12 @@ export class SidenavComponent implements OnInit {
   }
 
   addVariable(state: State, type: ContainerType) {
-    const dialogRef = this.matDialog.open(AddVariableComponent);
+    const dialogRef = this.dialog.open(AddVariableComponent, {
+      panelClass: 'no-dialog-padding'
+    });
 
     dialogRef.afterClosed().subscribe((variable: Variable) => {
-      variable.type = type;
+      variable.type = ContainerType[type];
       this.objectService.addVariable(state, variable);
     });
   }
@@ -50,8 +55,8 @@ export class SidenavComponent implements OnInit {
       this.activeState = null;
     } else {
       this.activeState = state;
-      this.countFunction(this.diagram.states, this.activeState);
     }
+    // this.countFunction(this.diagram.states, this.activeState);
   }
 
   isActionState(state: State) {
@@ -65,18 +70,26 @@ export class SidenavComponent implements OnInit {
   }
 
   deleteVariable(state: State, type: ContainerType) {
-    const dialogRef = this.matDialog.open(DeleteVariableComponent, {
+    const dialogRef = this.dialog.open(DeleteVariableComponent, {
+      panelClass: 'no-dialog-padding',
       data: type === ContainerType.INPUT ? state.inputContainer : state.outputContainer
     });
     dialogRef.afterClosed().subscribe((variable: Variable) => {
+      variable.type = ContainerType[type];
       this.objectService.deleteVariable(state, variable);
     });
   }
 
-  configState(state) {
+  showStateSettings(state) {
     this.isActiveSetting = !this.isActiveSetting;
-    this.objectService.setConfigState(state);
-
+    if (this.isActiveSetting) {
+      this.objectService.setConfigState(state);
+    } else {
+      this.objectService.setConfigState(null);
+    }
+    this.parent.isActiveSetting = this.isActiveSetting;
+    console.log(this.isActiveSetting);
+    console.log(this.objectService.getConfigState());
   }
 
 

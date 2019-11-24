@@ -32,7 +32,10 @@ import {SettingsComponent} from './components/settings/settings.component';
     SettingsComponent
   ],
   entryComponents: [
-    OpenDiagramComponent
+    OpenDiagramComponent,
+    AddVariableComponent,
+    DeleteVariableComponent,
+    SettingsComponent
   ],
   imports: [
     CommonModule,

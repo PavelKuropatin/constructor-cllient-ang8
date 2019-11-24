@@ -5,7 +5,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 @Component({
   selector: 'app-delete-variable',
   templateUrl: './delete-variable.component.html',
-  styleUrls: ['./delete-variable.component.css']
+  styleUrls: ['./delete-variable.component.scss']
 })
 export class DeleteVariableComponent implements OnInit {
 

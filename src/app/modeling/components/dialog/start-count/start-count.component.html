@@ -1,62 +1,60 @@
-<md-card>
-  <md-card-header>
-    <md-card-header-text>
-      <div class="title-text">{{ 'model.settings' | translate }}</div>
-    </md-card-header-text>
-  </md-card-header>
-  <md-card-content>
-    <md-select [(ngModel)]="selectedSourceType" aria-label="source type" name="sourceType">
-      <md-option (value)="source" *ngFor="let source of constants.MODEL">{{source | translate}}</md-option>
-    </md-select>
-    <div ng-switch="selectedSourceType">
-      <md-list ng-switch-when="Generator">
-        <md-list-item>
-          <md-input-container>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ 'model.settings' | translate }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-select [(ngModel)]="selectedSourceType" aria-label="source type" name="sourceType">
+      <mat-option *ngFor="let source of constants.MODEL" [value]="source">{{source | translate}}</mat-option>
+    </mat-select>
+    <div [ngSwitch]="selectedSourceType">
+      <mat-list *ngSwitchCase="Generator">
+        <mat-list-item>
+          <mat-form-field>
             <label>{{ 'model.interval' | translate }}</label>
-            <input [(ngModel)]="modelingSettings.params.interval"/>
-          </md-input-container>
-          <md-button (click)="addVariable()">+</md-button>
-        </md-list-item>
-        <md-list-item *ngFor="let _var of modelingSettings.vars; let i = index">
-          <md-input-container>
+            <input [(ngModel)]="modelingSettings.params.interval" matInput/>
+          </mat-form-field>
+          <button (click)="addVariable()">+</button>
+        </mat-list-item>
+        <mat-list-item *ngFor="let _var of modelingSettings.vars; let i = index">
+          <mat-form-field>
             <label>{{'model.generator.var_name' | translate }}</label>
-            <input [(ngModel)]="_var.name"/>
-          </md-input-container>
-          <md-input-container>
+            <input [(ngModel)]="_var.name" matInput/>
+          </mat-form-field>
+          <mat-form-field>
             <label>{{'model.generator.var_start' | translate }}</label>
-            <input [(ngModel)]="_var.startValue"/>
-          </md-input-container>
-          <md-input-container>
+            <input [(ngModel)]="_var.startValue" matInput/>
+          </mat-form-field>
+          <mat-form-field>
             <label>{{'model.generator.var_step' | translate }}</label>
-            <input [(ngModel)]="_var.stepValue"/>
-          </md-input-container>
-          <md-button (click)="deleteVariable(i)">-</md-button>
-        </md-list-item>
-      </md-list>
-      <md-list ng-switch-when="Socket">
-        <md-list-item>
-          <md-input-container>
+            <input [(ngModel)]="_var.stepValue" matInput/>
+          </mat-form-field>
+          <button (click)="deleteVariable(i)">-</button>
+        </mat-list-item>
+      </mat-list>
+      <mat-list *ngSwitchCase="Socket">
+        <mat-list-item>
+          <mat-form-field>
             <label>{{ 'model.socket.host' | translate }}</label>
-            <input [(ngModel)]="modelingSettings.params.host"/>
-          </md-input-container>
-          <md-input-container>
+            <input [(ngModel)]="modelingSettings.params.host" matInput/>
+          </mat-form-field>
+          <mat-form-field>
             <label>{{ 'model.socket.port' | translate }}</label>
-            <input [(ngModel)]="modelingSettings.params.port"/>
-          </md-input-container>
-          <md-input-container>
+            <input [(ngModel)]="modelingSettings.params.port" matInput/>
+          </mat-form-field>
+          <mat-form-field>
             <label>{{ 'model.interval' | translate }}</label>
-            <input [(ngModel)]="modelingSettings.interval"/>
-          </md-input-container>
-        </md-list-item>
-      </md-list>
+            <input [(ngModel)]="modelingSettings.interval" matInput/>
+          </mat-form-field>
+        </mat-list-item>
+      </mat-list>
     </div>
-  </md-card-content>
-  <md-input-container>
-    <md-button (click)="apply()">
+  </mat-card-content>
+  <mat-form-field>
+    <button (click)="apply()">
       {{'apply' | translate }}
-    </md-button>
-    <md-button (click)="cancel()">
+    </button>
+    <button (click)="cancel()">
       {{'close' | translate }}
-    </md-button>
-  </md-input-container>
-</md-card>
+    </button>
+  </mat-form-field>
+</mat-card>

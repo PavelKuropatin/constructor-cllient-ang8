@@ -8,11 +8,13 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
+  MatListModule,
   MatMenuModule,
   MatOptionModule,
   MatSelectModule,
   MatSliderModule,
-  MatToolbarModule
+  MatTableModule,
+  MatToolbarModule,
 } from '@angular/material';
 import {FlexModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -32,8 +34,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatSelectModule,
     MatOptionModule,
     MatInputModule,
+    MatListModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatTableModule
   ],
   exports: [
     MatButtonModule,
@@ -48,7 +52,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatSelectModule,
     MatOptionModule,
     MatInputModule,
-    MatDialogModule
+    MatListModule,
+    MatDialogModule,
+    MatTableModule
   ]
 })
 export class MaterialModule {

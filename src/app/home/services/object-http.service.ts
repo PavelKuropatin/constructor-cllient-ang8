@@ -26,7 +26,8 @@ export class ObjectHttpService {
   }
 
   deleteState(diagramUuid: string, stateUuid: string) {
-    this.http.delete(`${this.diagramUrl}/${diagramUuid}/state/${stateUuid}`);
+    console.log(`${this.diagramUrl}/${diagramUuid}/state/${stateUuid}`);
+    return this.http.delete(`${this.diagramUrl}/${diagramUuid}/state/${stateUuid}`);
   }
 
   createState(diagramUuid: string): Observable<State> {

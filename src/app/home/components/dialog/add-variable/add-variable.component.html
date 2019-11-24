@@ -1,25 +1,23 @@
-<md-card>
-  <md-card-header>
-    <md-card-header-text>
-      <div class="title-text">{{ 'param.add' | translate }}</div>
-    </md-card-header-text>
-  </md-card-header>
-  <md-card-content>
-    <md-input-container>
-      <label>{{ 'param.name' | translate }}</label>
-      <input [(ngModel)]="variable.label"/>
-    </md-input-container>
-    <md-input-container>
-      <label>{{ 'param.value' | translate }}</label>
-      <input [(ngModel)]="variable.value"/>
-    </md-input-container>
-  </md-card-content>
-  <md-input-container>
-    <md-button (click)="apply()">
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ 'param.add' | translate }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>{{ 'param.name' | translate }}</mat-label>
+      <input [(ngModel)]="variable.label" class="mat-input-width" matInput/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'param.value' | translate }}</mat-label>
+      <input [(ngModel)]="variable.value" class="mat-input-width" matInput/>
+    </mat-form-field>
+  </mat-card-content>
+  <div>
+    <button (click)="apply()" mat-stroked-button>
       {{ 'apply' | translate }}
-    </md-button>
-    <md-button (click)="cancel()">
+    </button>
+    <button (click)="cancel()" mat-stroked-button>
       {{ 'close' | translate}}
-    </md-button>
-  </md-input-container>
-</md-card>
+    </button>
+  </div>
+</mat-card>

@@ -12,6 +12,7 @@ import {ModelingJsplumbCanvasComponent} from './components/jsplumb/modeling-jspl
 import {ModelingJsplumbObjectComponent} from './components/jsplumb/modeling-jsplumb-object/modeling-jsplumb-object.component';
 import {ModelingJsplumbEndpointComponent} from './components/jsplumb/modeling-jsplumb-endpoint/modeling-jsplumb-endpoint.component';
 import {ModelingJsplumbConnectionComponent} from './components/jsplumb/modeling-jsplumb-connection/modeling-jsplumb-connection.component';
+import {MaterialModule} from '../material.module';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {ModelingJsplumbConnectionComponent} from './components/jsplumb/modeling-
   ],
   imports: [
     CommonModule,
+    MaterialModule,
     ModelingRoutingModule,
     TranslateModule,
     FormsModule

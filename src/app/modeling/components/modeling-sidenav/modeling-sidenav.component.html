@@ -1,36 +1,37 @@
-<md-card class="model-sidenav">
-  <md-card-content class="connectedItems" ng-model="diagram.states" ui-sortable="sortableOptions"
-                   ui-sortable-update="refresh()">
-    <md-card (click)="setActiveState(state)" *ngFor="let state of diagram.states">
-      <md-card-header>
-        <md-card-header-text>
-          <div layout="row" layout-align="space-between center">
+<mat-card class="model-sidenav">
+  <mat-card-content [(ngModel)]="diagram.states" class="connectedItems" ui-sortable="sortableOptions"
+                    ui-sortable-update="refresh()">
+    <mat-card (click)="setActiveState(state)" *ngFor="let state of diagram.states">
+      <mat-card-header>
+        <mat-card-title>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
             <span class="title-text">{{state.name}}</span>
             <span class="medium-text">
                             {{ 'state.position' | translate }}: [{{state.x| number}}, {{state.y| number}}]
                         </span>
-            <md-button (click)="showStateSettings(state)" *ngIf="editable" class="md-icon-button">
-              <md-icon>settings_applications</md-icon>
-            </md-button>
+            <button (click)="showStateSettings(state)" *ngIf="editable" class="" mat-icon-button>
+              <mat-icon>settings_applications</mat-icon>
+            </button>
           </div>
-        </md-card-header-text>
-      </md-card-header>
+        </mat-card-title>
+      </mat-card-header>
 
-      <md-card *ngIf="isActiveState(state)">
-        <md-card-content *ngFor="let connection of state.source.connections"
-                         *ngIf="state.source.connections.length">
+      <mat-card *ngIf="isActiveState(state)">
+        <div *ngIf="state.source.connections.length">
+          <mat-card-content *ngFor="let connection of state.source.connections">
 
-          <div class="big-text">{{ 'state.connection.self' | translate }} {{connection.uuid}}
-            <md-icon (click)="changeVisibility(connection)" *ngIf="connection.isVisible">
-              visibility
-            </md-icon>
-            <md-icon (click)="changeVisibility(connection)" *ngIf="connection.isVisible === false">
-              visibility_off
-            </md-icon>
-          </div>
+            <div class="big-text">{{ 'state.connection.self' | translate }} {{connection.uuid}}
+              <mat-icon (click)="changeVisibility(connection)" *ngIf="connection.isVisible">
+                visibility
+              </mat-icon>
+              <mat-icon (click)="changeVisibility(connection)" *ngIf="connection.isVisible === false">
+                visibility_off
+              </mat-icon>
+            </div>
 
-        </md-card-content>
-      </md-card>
-    </md-card>
-  </md-card-content>
-</md-card>
+          </mat-card-content>
+        </div>
+      </mat-card>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

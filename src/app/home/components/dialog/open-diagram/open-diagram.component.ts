@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
 import {Diagram} from '../../../../domain/diagram';
 import {ObjectHttpService} from '../../../services/object-http.service';
@@ -6,12 +6,15 @@ import {ObjectHttpService} from '../../../services/object-http.service';
 @Component({
   selector: 'app-open-diagram',
   templateUrl: './open-diagram.component.html',
-  styleUrls: ['./open-diagram.component.css']
+  styleUrls: ['./open-diagram.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class OpenDiagramComponent implements OnInit {
 
   diagrams: Diagram[];
   chosenUuid: string;
+  displayedColumns: string[];
+  diagramColumns: string[];
 
   constructor(
     private dialogRef: MatDialogRef<OpenDiagramComponent>,
@@ -20,6 +23,8 @@ export class OpenDiagramComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.displayedColumns = ['name', 'action'];
+    this.diagramColumns = ['name'];
     this.objectHttpService.getDiagrams()
       .subscribe(diagrams => {
         this.diagrams = diagrams;

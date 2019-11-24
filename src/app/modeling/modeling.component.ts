@@ -23,7 +23,7 @@ import {ModelingJsPlumbStyleService} from './services/modeling-js-plumb-style.se
 @Component({
   selector: 'app-modeling',
   templateUrl: './modeling.component.html',
-  styleUrls: ['./modeling.component.css']
+  styleUrls: ['./modeling.component.scss']
 })
 export class ModelingComponent implements OnInit {
   diagram: Diagram;
@@ -36,12 +36,13 @@ export class ModelingComponent implements OnInit {
   sortableOptions: object;
   isActiveSetting: boolean;
   movedStates: { states: State[] };
-  backgroundImg: { name: string };
-  imageToLoad: object;
+  backgroundImg: any;
+  imageToUpload: object;
   modelingSettings: ModelingSettings;
   cmdUuid: string;
   // @ts-ignore
   timer: NodeJS.Timer; // ??? NodeJS.Timer;
+  imageToLoad: File;
 
   constructor(
     private router: Router,
@@ -50,7 +51,7 @@ export class ModelingComponent implements OnInit {
     private translate: TranslateService,
     private socketHttpService: SocketHttpService,
     private socketService: SocketService,
-    private mdDialog: MatDialog,
+    private dialog: MatDialog,
     private modelingJsPlumbStyleService: ModelingJsPlumbStyleService,
     private imageHttpService: ImageHttpService
   ) {
@@ -66,9 +67,8 @@ export class ModelingComponent implements OnInit {
     this.sortableOptions = {
       connectWith: '.connectedItems'
     };
-    this.backgroundImg = {name: ''};
     this.movedStates = {states: []};
-    this.imageToLoad = null;
+    this.imageToUpload = null;
     console.log(CONSTANTS);
 
   }
@@ -135,7 +135,7 @@ export class ModelingComponent implements OnInit {
   }
 
   openModelingSettings() {
-    const dialogRef = this.mdDialog.open(StartCountComponent, {
+    const dialogRef = this.dialog.open(StartCountComponent, {
       data: this.modelingSettings
     });
 
@@ -167,7 +167,7 @@ export class ModelingComponent implements OnInit {
   }
 
   openDiagram() {
-    const dialogRef = this.mdDialog.open(OpenDiagramComponent, {});
+    const dialogRef = this.dialog.open(OpenDiagramComponent, {});
 
     dialogRef.afterClosed()
       .subscribe(diagramUuid => {
@@ -193,8 +193,37 @@ export class ModelingComponent implements OnInit {
   }
 
   uploadImage() {
-    console.log(this.imageToLoad);
+    console.log(this.imageToUpload);
     this.imageHttpService.getImages().subscribe(images => console.log(images));
   }
 
+  selectImage() {
+    // $('input[type="file"]').click();
+  }
+
+  onFilesSelect(files: FileList) {
+    console.log(files);
+    if (files) {
+      this.imageToLoad = files[0];
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(this.imageToLoad);
+      fileReader.onload = () => {
+        this.backgroundImg = fileReader.result;
+        const image = new Image();
+        image.onload = () => {
+          console.log(image.width);
+          console.log(image.height);
+          // $('custom-js-plumb-canvas')
+          //   .css({
+          //     minWidth: img.width + 'px',
+          //     minHeight: img.height + 'px',
+          //     'background-image': 'url(' + result + ')'
+          //   });
+        };
+        // @ts-ignore
+        image.src = fileReader.result;
+      };
+    }
+
+  }
 }

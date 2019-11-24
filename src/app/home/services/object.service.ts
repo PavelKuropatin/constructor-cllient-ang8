@@ -13,7 +13,6 @@ export class ObjectService {
   private configState: State;
 
   constructor(private objectHttpService: ObjectHttpService) {
-    console.log(objectHttpService);
   }
 
   createState(diagram: Diagram) {
@@ -22,7 +21,10 @@ export class ObjectService {
   }
 
   deleteState(diagram: Diagram, state: State) {
-    this.objectHttpService.deleteState(diagram.uuid, state.uuid);
+    this.objectHttpService.deleteState(diagram.uuid, state.uuid)
+      .subscribe(response => {
+        console.log(response);
+      });
     const index = diagram.states.indexOf(state);
     if (index !== -1) {
       diagram.states.splice(index, 1);

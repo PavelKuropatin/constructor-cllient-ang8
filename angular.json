@@ -24,7 +24,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
+              "src/styles.scss",
               {
                 "input": "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
               }
@@ -92,7 +92,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           }
@@ -125,5 +125,10 @@
       }
     }
   },
-  "defaultProject": "diploma-client-ang8"
+  "defaultProject": "diploma-client-ang8",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

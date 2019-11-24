@@ -1,115 +1,95 @@
-<div layout="column">
-  <div class="model-container" layout="row">
-    <div class="sidenav-container" flex="25" ng-if="vm.diagram">
-      <custom-sidenav active-state="vm.activeState" diagram="vm.diagram" editable="false"
-                      refresh="vm.refresh"></custom-sidenav>
-      <custom-sidenav active-state="vm.activeState" change-visibility="vm.inverseConnectionVisibility"
-                      diagram="vm.movedStates"
-                      editable="true" is-active-setting="vm.isActiveSetting"
-                      is-active-state="vm.isActiveState" refresh="vm.refresh"
-                      set-active-state="vm.setActiveState">
-      </custom-sidenav>
+<div fxLayout="column">
+  <div class="model-container" fxLayout="row">
+    <div *ngIf="diagram" class="sidenav-container" fxFlex="25">
+      <app-modeling-sidenav active-state="vm.activeState" diagram="vm.diagram" editable="false"
+                            refresh="vm.refresh"></app-modeling-sidenav>
+      <app-modeling-sidenav active-state="vm.activeState" change-visibility="vm.inverseConnectionVisibility"
+                            diagram="vm.movedStates"
+                            editable="true" is-active-setting="vm.isActiveSetting"
+                            is-active-state="vm.isActiveState" refresh="vm.refresh"
+                            set-active-state="vm.setActiveState">
+      </app-modeling-sidenav>
     </div>
 
-    <div class="schema-container" flex ng-if="!vm.isActiveSetting">
-      <md-toolbar class="md-hue-2">
-        <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+    <div *ngIf="!isActiveSetting" class="schema-container" fxFlex>
+      <mat-toolbar class="md-hue-2">
+        <div class="md-toolbar-tools" fxLayout="row" fxLayoutAlign="space-between center">
           <div class="md-menu-demo">
-            <div class="menu-demo-container" layout="column" layout-align="center center">
-              <md-menu>
-                <md-button aria-label="Open menu with custom trigger" class="md-icon-button"
-                           ng-mouseenter="$mdMenu.open()">
-
-                  <md-icon>menu</md-icon>
-                </md-button>
-                <md-menu-content ng-mouseleave="$mdMenu.close()" width="4">
-                  <md-menu-item>
-                    <md-button ng-click="vm.openDiagram()">
-                      {{ 'diagram.open' | translate }}
-                    </md-button>
-                  </md-menu-item>
-                </md-menu-content>
-              </md-menu>
+            <div class="menu-demo-container" fxLayout="column" fxLayoutAlign="center center">
+              <button [matMenuTriggerFor]="diagram_menu" aria-label="Example icon-button with a menu" mat-icon-button>
+                <mat-icon>menu</mat-icon>
+              </button>
+              <mat-menu #diagram_menu="matMenu">
+                <button (click)="openDiagram()" mat-menu-item>
+                  {{ 'diagram.open' | translate }}
+                </button>
+              </mat-menu>
             </div>
           </div>
 
-          <md-button class="md-raised" ng-click="vm.openModelSettings()"> {{ 'model.start' | translate }}
-          </md-button>
-          <md-button class="md-raised" ng-click="vm.stopCount()">{{ 'model.stop' | translate }}</md-button>
+          <button (click)="openModelingSettings()" mat-raised-button> {{ 'model.start' | translate }}
+          </button>
+          <button (click)="stopCount()" mat-raised-button>{{ 'model.stop' | translate }}</button>
 
-          <md-button class="md-raised" ng-click="vm.goToSchema()">{{ 'schema.self' | translate }}</md-button>
+          <button (click)="goToSchema()" mat-raised-button>{{ 'schema.self' | translate }}</button>
 
-          <md-slider aria-label="red" class="md-warn" id="red-slider" max="200" min="10"
-                     ng-model="vm.zoomlevel"
-                     step="10">
-          </md-slider>
+          <mat-slider [(ngModel)]="zoomLevel" aria-label="red" class="md-warn" id="red-slider" max="200"
+                      min="10"
+                      step="10">
+          </mat-slider>
 
           <div class="md-menu-demo">
-            <div class="menu-demo-container" layout="column" layout-align="center right">
-              <md-menu>
-                <md-button aria-label="Сhoose language" class="md-icon-button"
-                           ng-mouseenter="$mdMenu.open()">
-                  <md-icon>language</md-icon>
-                </md-button>
-                <md-menu-content ng-mouseleave="$mdMenu.close()" width="2">
-                  <md-menu-item>
-                    <md-button ng-click="vm.setLanguage('en')">
-                      {{ 'language.en' | translate }}
-                    </md-button>
-                  </md-menu-item>
-                  <md-menu-item>
-                    <md-button ng-click="vm.setLanguage('ru')">
-                      {{ 'language.ru' | translate }}
-                    </md-button>
-                  </md-menu-item>
-                </md-menu-content>
-              </md-menu>
+            <div class="menu-demo-container" fxLayout="column" fxLayoutAlign="center right">
+              <button [matMenuTriggerFor]="language_menu" mat-icon-button>
+                <mat-icon>language</mat-icon>
+              </button>
+              <mat-menu #language_menu="matMenu">
+                <button (click)="changeLanguage('en')" mat-menu-item>
+                  {{ 'language.en' | translate }}
+                </button>
+                <button (click)="changeLanguage('ru')" mat-menu-item>
+                  {{ 'language.ru' | translate }}  </button>
+              </mat-menu>
             </div>
           </div>
 
         </div>
-      </md-toolbar>
+      </mat-toolbar>
 
-      <div class="model" layout="row">
-        <custom-js-plumb-canvas id="container" image="vm.backgroundImg" on-connection="vm.onConnection"
-                                x="vm.pos_x" y="vm.pos_y"
-                                zoom="vm.zoomlevel">
-          <ng-include ng-repeat="state in vm.movedStates.states" src="state.template"></ng-include>
-        </custom-js-plumb-canvas>
+      <div class="model" fxLayout="row">
+        <app-modeling-jsplumb-canvas id="container" image="vm.backgroundImg"
+                                     x="vm.pos_x" y="vm.pos_y"
+                                     zoom="vm.zoomlevel">
+          <!--          <ng-include *ngFor="let state of movedStates.states" src="state.template"></ng-include>-->
+        </app-modeling-jsplumb-canvas>
       </div>
     </div>
 
-    <custom-setting flex="75" ng-if="vm.isActiveSetting"></custom-setting>
+    <app-modeling-settings *ngIf="isActiveSetting" fxFlex="75"></app-modeling-settings>
   </div>
 
 
   <footer>
-    <md-toolbar class="md-scroll-shrink">
-      <md-fab-toolbar md-direction="left">
-        <md-fab-trigger>
-          <md-button aria-label="Add...">
-            <md-icon>menu</md-icon>
-          </md-button>
-        </md-fab-trigger>
+    <mat-toolbar class="md-scroll-shrink">
 
-        <md-toolbar>
-          <md-fab-actions layout="row">
-            <md-button aria-label="load canvas background image">
-              <input ng-file-select="onFileSelect($files)" style="display: none" type="file"/>
-              <md-icon ng-click="vm.loadCanvasBackground()">image</md-icon>
-            </md-button>
+      <mat-toolbar-row>
+        <button aria-label="load canvas background image" mat-button>
+          <input (change)="onFilesSelect($event.target.files)" style="display: none" type="file"/>
+          <mat-icon (click)="selectImage()">image</mat-icon>
+        </button>
+      </mat-toolbar-row>
 
-            <md-button aria-label="refresh connections">
-              <md-icon ng-click="vm.refreshStates()">refresh</md-icon>
-            </md-button>
+      <mat-toolbar-row>
+        <button aria-label="refresh connections" mat-button>
+          <mat-icon (click)="refreshStates()">refresh</mat-icon>
+        </button>
+      </mat-toolbar-row>
 
-            <md-button aria-label="refresh connections">
-              <md-icon ng-click="vm.uploadImage()">cloud_upload</md-icon>
-            </md-button>
-
-          </md-fab-actions>
-        </md-toolbar>
-      </md-fab-toolbar>
-    </md-toolbar>
+      <mat-toolbar-row>
+        <button aria-label="refresh connections" mat-button>
+          <mat-icon (click)="uploadImage()">cloud_upload</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
   </footer>
 </div>

@@ -11,7 +11,7 @@ import {Connection} from '../../../domain/connection';
 @Component({
   selector: 'app-modeling-sidenav',
   templateUrl: './modeling-sidenav.component.html',
-  styleUrls: ['./modeling-sidenav.component.css']
+  styleUrls: ['./modeling-sidenav.component.scss']
 })
 export class ModelingSidenavComponent implements OnInit {
 

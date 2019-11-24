@@ -5,7 +5,7 @@ import {Variable} from '../../../../domain/variable';
 @Component({
   selector: 'app-add-variable',
   templateUrl: './add-variable.component.html',
-  styleUrls: ['./add-variable.component.css']
+  styleUrls: ['./add-variable.component.scss']
 })
 export class AddVariableComponent implements OnInit {
 

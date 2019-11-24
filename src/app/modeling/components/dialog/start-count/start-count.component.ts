@@ -7,7 +7,7 @@ import {ModelingSettings} from '../../../../domain/modeling-settings';
 @Component({
   selector: 'app-start-count',
   templateUrl: './start-count.component.html',
-  styleUrls: ['./start-count.component.css']
+  styleUrls: ['./start-count.component.scss']
 })
 export class StartCountComponent implements OnInit {
 

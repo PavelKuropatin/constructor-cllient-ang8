@@ -1,57 +1,57 @@
-<md-card class="action-input-container" layout="row">
-  <md-icon>call_received</md-icon>
-  <md-input-container *ngFor="let input of state.inputContainer">
+<mat-card class="action-input-container" fxLayout="row">
+  <mat-icon>call_received</mat-icon>
+  <mat-form-field *ngFor="let input of state.inputContainer">
     <label>{{input.label}}</label>
-    <input [(ngModel)]="input.value"/>
-  </md-input-container>
-</md-card>
+    <input [(ngModel)]="input.value" matInput/>
+  </mat-form-field>
+</mat-card>
 
-<md-card class="action-input-container" layout="row">
-  <md-icon>call_made</md-icon>
-  <md-input-container *ngFor="let output of state.outputContainer">
+<mat-card class="action-input-container" fxLayout="row">
+  <mat-icon>call_made</mat-icon>
+  <mat-form-field *ngFor="let output of state.outputContainer">
     <label>{{output.label}}</label>
-    <input [(ngModel)]="output.value"/>
-  </md-input-container>
-</md-card>
+    <input [(ngModel)]="output.value" matInput/>
+  </mat-form-field>
+</mat-card>
 
-<md-card layout="column">
-  <md-card *ngFor="let output of state.outputContainer">
-    <md-card-header>
-      <md-icon>call_made</md-icon>
+<mat-card fxLayout="column">
+  <mat-card *ngFor="let output of state.outputContainer">
+    <mat-card-header>
+      <mat-icon>call_made</mat-icon>
       {{output.label}}
-    </md-card-header>
-    <md-content>
-      <md-input-container>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field>
         <label>{{ 'function.enter' | translate }}</label>
-        <input (change)="countFunction([], state)" [(ngModel)]="output.expression"/>
-      </md-input-container>
-      <md-input-container>
+        <input (change)="countFunction([], state)" [(ngModel)]="output.expression" matInput/>
+      </mat-form-field>
+      <mat-form-field>
         <label>{{ 'function.result' | translate }}</label>
-        <input [(ngModel)]="output.value"/>
-      </md-input-container>
-    </md-content>
-  </md-card>
-</md-card>
+        <input [(ngModel)]="output.value" matInput/>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+</mat-card>
 
-<md-card>
+<mat-card>
 
-  <md-card-content layout="row">
-    <md-input-container>
+  <mat-card-content fxLayout="row">
+    <mat-form-field>
       <label>{{ 'state.source' | translate }}</label>
-      <md-select (change)="apply()" [(ngModel)]="sourceLayout">
-        <md-option (value)="icon" *ngFor="let icon of icons">
-          <md-icon>{{icon}}</md-icon>
-        </md-option>
-      </md-select>
-    </md-input-container>
-    <md-input-container>
+      <mat-select (change)="apply()" [(ngModel)]="sourceLayout">
+        <mat-option *ngFor="let icon of icons" [value]="icon">
+          <mat-icon>{{icon}}</mat-icon>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
 
       <label>{{ 'state.target' | translate }}</label>
-      <md-select (change)="apply()" [(ngModel)]="targetLayout">
-        <md-option (value)="icon" *ngFor="let icon of icons">
-          <md-icon>{{icon}}</md-icon>
-        </md-option>
-      </md-select>
-    </md-input-container>
-  </md-card-content>
-</md-card>
+      <mat-select (change)="apply()" [(ngModel)]="targetLayout">
+        <mat-option *ngFor="let icon of icons" [value]="icon">
+          <mat-icon>{{icon}}</mat-icon>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>

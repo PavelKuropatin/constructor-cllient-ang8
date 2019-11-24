@@ -15,7 +15,7 @@ import {Target} from '../domain/target';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
   diagram: Diagram;
@@ -26,14 +26,13 @@ export class HomeComponent implements OnInit {
   sourceEndpointStyle1: object;
   sourceEndpointStyle2: object;
   isActiveSetting: boolean;
-  countFunction = this.objectService.countFunction;
 
   constructor(
     private router: Router,
     private objectHttpService: ObjectHttpService,
     private objectService: ObjectService,
     private translate: TranslateService,
-    private mdDialog: MatDialog,
+    private dialog: MatDialog,
     private jsPlumbStyleService: JsPlumbStyleService
   ) {
     this.translate.setDefaultLang('en');
@@ -46,6 +45,9 @@ export class HomeComponent implements OnInit {
     this.sourceEndpointStyle1 = this.jsPlumbStyleService.getSourceEndpointStyle1();
     this.sourceEndpointStyle2 = this.jsPlumbStyleService.getSourceEndpointStyle2();
     this.isActiveSetting = false;
+    this.objectHttpService.getDiagram('1b6a7d82-fc1d-4743-ab06-1181f9da1a6b')
+      .subscribe(diagram => this.diagram = diagram);
+    console.log(this.diagram);
   }
 
   goToModeling() {
@@ -77,12 +79,13 @@ export class HomeComponent implements OnInit {
   }
 
   openDiagram() {
-    const dialogRef = this.mdDialog.open(OpenDiagramComponent, {});
-
+    const dialogRef = this.dialog.open(OpenDiagramComponent, {panelClass: 'no-dialog-padding'});
     dialogRef.afterClosed()
       .subscribe(diagramUuid => {
-        this.objectHttpService.getDiagram(diagramUuid)
-          .subscribe(diagram => this.diagram = diagram);
+        if (diagramUuid) {
+          this.objectHttpService.getDiagram(diagramUuid)
+            .subscribe(diagram => this.diagram = diagram);
+        }
       });
   }
 

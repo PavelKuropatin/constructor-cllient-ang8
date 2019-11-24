@@ -3,7 +3,7 @@ import {Component, Input, OnInit} from '@angular/core';
 @Component({
   selector: 'app-modeling-jsplumb-canvas',
   templateUrl: './modeling-jsplumb-canvas.component.html',
-  styleUrls: ['./modeling-jsplumb-canvas.component.css']
+  styleUrls: ['./modeling-jsplumb-canvas.component.scss']
 })
 export class ModelingJsplumbCanvasComponent implements OnInit {
 

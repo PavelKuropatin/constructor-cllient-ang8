@@ -4,8 +4,7 @@
                  [isActiveSetting]="isActiveSetting">
     </app-sidenav>
   </div>
-  <div class="schema-container" fxFlex>
-    <!--    *ngIf="!isActiveSetting">-->
+  <div *ngIf="!isActiveSetting" class="schema-container" fxFlex>
     <mat-toolbar color="primary">
       <mat-toolbar-row fxLayoutAlign="space-between center">
         <button [matMenuTriggerFor]="diagram_menu" aria-label="Example icon-button with a menu" mat-icon-button>
@@ -50,5 +49,5 @@
     <!--    </js-plumb-canvas>-->
   </div>
 
-  <!--  <setting flex="75" ngIf="isActiveSetting"></setting>-->
+  <app-settings *ngIf="isActiveSetting" fxFlex="75"></app-settings>
 </div>
