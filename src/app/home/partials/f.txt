@@ -1,0 +1,6 @@
+<ng-container *ngFor="let connection of state.source.connections">
+      <app-jsplumb-connection *ngIf="connection.isVisible"
+                              [(ngModel)]="connection"
+                              [states]="states">
+      </app-jsplumb-connection>
+    </ng-container>

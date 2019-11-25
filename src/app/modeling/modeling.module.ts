@@ -15,6 +15,7 @@ import {ModelingJsplumbConnectionComponent} from './components/jsplumb/modeling-
 import {MaterialModule} from '../material.module';
 import {HttpClientModule} from '@angular/common/http';
 import {OpenDiagramComponent} from '../home/components/dialog/open-diagram/open-diagram.component';
+import {SortablejsModule} from 'ngx-sortablejs';
 
 
 @NgModule({
@@ -30,16 +31,17 @@ import {OpenDiagramComponent} from '../home/components/dialog/open-diagram/open-
   ],
   entryComponents: [
     OpenDiagramComponent,
-    ModelingSettingsComponent
+    ModelingSettingsComponent,
+    StartCountComponent
   ],
   imports: [
     CommonModule,
-    FormsModule,
     MaterialModule,
     HttpClientModule,
     ModelingRoutingModule,
     TranslateModule,
-    FormsModule
+    FormsModule,
+    SortablejsModule
   ]
 })
 export class ModelingModule {

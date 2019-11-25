@@ -4,6 +4,7 @@ import {Diagram} from '../../domain/diagram';
 import {State} from '../../domain/state';
 import {Variable} from '../../domain/variable';
 import {Target} from '../../domain/target';
+import * as math from 'maths.ts';
 
 @Injectable({
   providedIn: 'root'
@@ -81,14 +82,13 @@ export class ObjectService {
     parentStates.forEach(parentState => {
       this.applyParentContainer(parentState.outputContainer, state.inputContainer);
     });
-    state.outputContainer.forEach(container => {
-      let bufFunction = container.expression.trim();
+    state.outputContainer.forEach(vatiable => {
+      let expression = vatiable.expression.trim();
       state.inputContainer.forEach(item => {
-        bufFunction = bufFunction.replace(new RegExp(item.label, 'g'), item.value.toString());
+        expression = expression.replace(new RegExp(item.label, 'g'), `${item.value}`);
       });
       try {
-        // tslint:disable-next-line:no-eval
-        container.value = eval(bufFunction);
+        vatiable.value = math.evaluate(expression).numberValue;
       } catch (err) {
       }
     });

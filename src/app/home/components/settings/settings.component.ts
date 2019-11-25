@@ -22,14 +22,12 @@ export class SettingsComponent implements OnInit {
   }
 
   countFunction(states: State[], state: State) {
-    console.log('change');
     this.objectService.countFunction(states, state);
   }
 
   ngOnInit() {
     this.icons = Object.keys(CONSTANTS.ENDPOINT_LAYOUTS);
     this.state = this.objectService.getConfigState();
-    console.log(this.state);
     this.sourceLayout = this.getByAnchor(this.state.style.sourceAnchor);
     this.targetLayout = this.getByAnchor(this.state.style.targetAnchor);
   }
@@ -41,7 +39,6 @@ export class SettingsComponent implements OnInit {
       targetAnchor: CONSTANTS.ENDPOINT_LAYOUTS[this.targetLayout].a,
       targetEndpoint: CONSTANTS.ENDPOINT_LAYOUTS[this.targetLayout].e
     });
-    console.log(this.state.settings);
     this.objectHttpService.saveStateSettings(this.state.uuid, this.state.settings)
       .subscribe(response => console.log(response));
   }

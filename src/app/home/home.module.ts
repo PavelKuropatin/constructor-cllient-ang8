@@ -16,6 +16,7 @@ import {JsplumbObjectComponent} from './components/jsplumb/jsplumb-object/jsplum
 import {JsplumbConnectionComponent} from './components/jsplumb/jsplumb-connection/jsplumb-connection.component';
 import {JsplumbEndpointComponent} from './components/jsplumb/jsplumb-endpoint/jsplumb-endpoint.component';
 import {SettingsComponent} from './components/settings/settings.component';
+import {ActionComponent} from './components/action/action.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {SettingsComponent} from './components/settings/settings.component';
     JsplumbObjectComponent,
     JsplumbConnectionComponent,
     JsplumbEndpointComponent,
-    SettingsComponent
+    SettingsComponent,
+    ActionComponent
   ],
   entryComponents: [
     OpenDiagramComponent,

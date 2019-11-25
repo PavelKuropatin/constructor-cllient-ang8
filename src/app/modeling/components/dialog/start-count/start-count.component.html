@@ -2,59 +2,62 @@
   <mat-card-header>
     <mat-card-title>{{ 'model.settings' | translate }}</mat-card-title>
   </mat-card-header>
-  <mat-card-content>
-    <mat-select [(ngModel)]="selectedSourceType" aria-label="source type" name="sourceType">
-      <mat-option *ngFor="let source of constants.MODEL" [value]="source">{{source | translate}}</mat-option>
-    </mat-select>
-    <div [ngSwitch]="selectedSourceType">
-      <mat-list *ngSwitchCase="Generator">
+  <mat-card-content fxLayout="column">
+    <div fxLayoutAlign="space-between center" style="margin: 10px 0; padding-left:15px; width: 200px">
+      <mat-select [(value)]="modelingSettings.type" aria-label="source type" name="sourceType">
+        <mat-option *ngFor="let source of sources" [value]="source">{{source | translate}}</mat-option>
+      </mat-select>
+    </div>
+    <div [ngSwitch]="modelingSettings.type">
+      <mat-list *ngSwitchCase="CONSTANTS.MODEL.GENERATOR">
         <mat-list-item>
           <mat-form-field>
-            <label>{{ 'model.interval' | translate }}</label>
-            <input [(ngModel)]="modelingSettings.params.interval" matInput/>
+            <mat-label>{{ 'model.interval' | translate }}</mat-label>
+            <input [(ngModel)]="modelingSettings.interval" matInput/>
           </mat-form-field>
-          <button (click)="addVariable()">+</button>
+          <button (click)="addVariable()" mat-button>+</button>
         </mat-list-item>
         <mat-list-item *ngFor="let _var of modelingSettings.vars; let i = index">
           <mat-form-field>
-            <label>{{'model.generator.var_name' | translate }}</label>
+            <mat-label>{{'model.generator.var_name' | translate }}</mat-label>
             <input [(ngModel)]="_var.name" matInput/>
           </mat-form-field>
           <mat-form-field>
-            <label>{{'model.generator.var_start' | translate }}</label>
+            <mat-label>{{'model.generator.var_start' | translate }}</mat-label>
             <input [(ngModel)]="_var.startValue" matInput/>
           </mat-form-field>
           <mat-form-field>
-            <label>{{'model.generator.var_step' | translate }}</label>
+            <mat-label>{{'model.generator.var_step' | translate }}</mat-label>
             <input [(ngModel)]="_var.stepValue" matInput/>
           </mat-form-field>
-          <button (click)="deleteVariable(i)">-</button>
+          <button (click)="deleteVariable(i)" mat-button>-</button>
         </mat-list-item>
       </mat-list>
-      <mat-list *ngSwitchCase="Socket">
+      <mat-list *ngSwitchCase="CONSTANTS.MODEL.SOCKET">
         <mat-list-item>
           <mat-form-field>
-            <label>{{ 'model.socket.host' | translate }}</label>
+            <mat-label>{{ 'model.socket.host' | translate }}</mat-label>
             <input [(ngModel)]="modelingSettings.params.host" matInput/>
           </mat-form-field>
           <mat-form-field>
-            <label>{{ 'model.socket.port' | translate }}</label>
+            <mat-label>{{ 'model.socket.port' | translate }}</mat-label>
             <input [(ngModel)]="modelingSettings.params.port" matInput/>
           </mat-form-field>
           <mat-form-field>
-            <label>{{ 'model.interval' | translate }}</label>
+            <mat-label>{{ 'model.interval' | translate }}</mat-label>
             <input [(ngModel)]="modelingSettings.interval" matInput/>
           </mat-form-field>
         </mat-list-item>
       </mat-list>
     </div>
   </mat-card-content>
-  <mat-form-field>
-    <button (click)="apply()">
+
+  <div>
+    <button (click)="apply()" mat-button>
       {{'apply' | translate }}
     </button>
-    <button (click)="cancel()">
+    <button (click)="cancel()" mat-button>
       {{'close' | translate }}
     </button>
-  </mat-form-field>
+  </div>
 </mat-card>

@@ -88,8 +88,6 @@ export class SidenavComponent implements OnInit {
       this.objectService.setConfigState(null);
     }
     this.parent.isActiveSetting = this.isActiveSetting;
-    console.log(this.isActiveSetting);
-    console.log(this.objectService.getConfigState());
   }
 
 

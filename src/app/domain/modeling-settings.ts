@@ -6,10 +6,10 @@ export class ModelingSettings {
   params: object;
   vars: ModelingVariable[];
 
-  constructor(type: string, interval: number, params: object, vars: ModelingVariable[]) {
+  constructor(type?: string, interval?: number, params?: object, vars?: ModelingVariable[]) {
     this.type = type;
-    this.interval = interval;
-    this.params = params;
-    this.vars = vars;
+    this.interval = interval || 0;
+    this.params = params || [];
+    this.vars = vars || [];
   }
 }

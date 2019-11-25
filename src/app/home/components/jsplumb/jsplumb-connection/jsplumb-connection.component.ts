@@ -1,4 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {jsPlumbInstance} from 'jsplumb';
+import {State} from '../../../../domain/state';
 
 @Component({
   selector: 'app-jsplumb-connection',
@@ -6,6 +8,8 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./jsplumb-connection.component.scss']
 })
 export class JsplumbConnectionComponent implements OnInit {
+  jsPlumbInstance: jsPlumbInstance;
+  @Input() states: State[];
 
   constructor() {
   }

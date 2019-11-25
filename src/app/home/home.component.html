@@ -11,13 +11,13 @@
           <mat-icon>menu</mat-icon>
         </button>
         <mat-menu #diagram_menu="matMenu">
-          <button (click)="createNewDiagram()" mat-menu-item>
+          <button (click)="createNewDiagram()" mat-menu-item style="text-align: center">
             {{ 'diagram.create' | translate }}
           </button>
-          <button (click)="updateDiagram()" *ngIf="diagram" mat-menu-item>
+          <button (click)="updateDiagram()" *ngIf="diagram" mat-menu-item style="text-align: center">
             {{ 'diagram.update' | translate }}
           </button>
-          <button (click)="openDiagram()" mat-menu-item>
+          <button (click)="openDiagram()" mat-menu-item style="text-align: center">
             {{ 'diagram.open' | translate }}
           </button>
         </mat-menu>
@@ -34,19 +34,25 @@
           <mat-icon>language</mat-icon>
         </button>
         <mat-menu #language_menu="matMenu">
-          <button (click)="changeLanguage('en')" mat-menu-item>
+          <button (click)="changeLanguage('en')" mat-menu-item style="text-align: center">
             {{ 'language.en' | translate }}
           </button>
-          <button (click)="changeLanguage('ru')" mat-menu-item>
+          <button (click)="changeLanguage('ru')" mat-menu-item style="text-align: center">
             {{ 'language.ru' | translate }}  </button>
         </mat-menu>
       </mat-toolbar-row>
     </mat-toolbar>
 
-    <!--    <js-plumb-canvas id="container" on-connection="vm.onConnection" x="vm.pos_x" y="vm.pos_y"-->
-    <!--                     zoom="vm.zoomlevel">-->
-    <!--      <ng-include ng-repeat="state in vm.diagram.states" src="state.template"></ng-include>-->
-    <!--    </js-plumb-canvas>-->
+    <app-jsplumb-canvas (fOnConnection)="onConnection" [jsPlumbInstance]="jsPlumbInstance" [x]="x" [y]="x"
+                        [zoom]="zoomLevel"
+                        id="container">
+      <app-action (setActiveStateF)="setActiveState"
+                  *ngFor="let state of diagram.states"
+                  [jsPlumbInstance]="jsPlumbInstance"
+                  [state]="state"
+                  [states]="diagram.states"
+      ></app-action>
+    </app-jsplumb-canvas>
   </div>
 
   <app-settings *ngIf="isActiveSetting" fxFlex="75"></app-settings>

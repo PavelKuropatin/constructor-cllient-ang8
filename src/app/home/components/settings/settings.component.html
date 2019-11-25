@@ -1,26 +1,25 @@
-<mat-card class="action-input-container" fxLayout="row">
+<mat-card class="action-input-container" fxLayout="row" fxLayoutAlign="space-between center">
   <mat-icon>call_received</mat-icon>
   <mat-form-field *ngFor="let input of state.inputContainer">
-    <label>{{input.label}}</label>
+    <mat-label>{{input.label}}</mat-label>
     <input [(ngModel)]="input.value" matInput/>
   </mat-form-field>
 </mat-card>
 
-<mat-card class="action-input-container" fxLayout="row">
+<mat-card class="action-input-container" fxLayout="row" fxLayoutAlign="space-between center">
   <mat-icon>call_made</mat-icon>
   <mat-form-field *ngFor="let output of state.outputContainer">
-    <label>{{output.label}}</label>
+    <mat-label>{{output.label}}</mat-label>
     <input [(ngModel)]="output.value" matInput/>
   </mat-form-field>
 </mat-card>
 
 <!--todo fix (change)-->
-<mat-card *ngFor="let output of state.outputContainer" fxLayout="column">
-  <mat-card-header>
-    <mat-icon>call_made</mat-icon>
-    {{output.label}}
-  </mat-card-header>
-  <mat-card-content>
+<mat-card *ngIf="state.outputContainer.length !== 0" fxLayout="column">
+
+  <mat-card-content *ngFor="let output of state.outputContainer" fxLayout="row" fxLayoutAlign="space-between center">
+    <span class="title-text">{{output.label}}</span>
+
     <mat-form-field>
       <mat-label>{{ 'function.enter' | translate }}</mat-label>
       <input (change)="countFunction([], state)" [(ngModel)]="output.expression" matInput/>
@@ -44,7 +43,6 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-
       <mat-label>{{ 'state.target' | translate }}</mat-label>
       <mat-select (change)="apply()" [(ngModel)]="targetLayout">
         <mat-option *ngFor="let icon of icons" [value]="icon">

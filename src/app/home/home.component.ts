@@ -11,6 +11,7 @@ import {State} from '../domain/state';
 import {OpenDiagramComponent} from './components/dialog/open-diagram/open-diagram.component';
 import {Connection} from '../domain/connection';
 import {Target} from '../domain/target';
+import {jsPlumb, jsPlumbInstance} from 'jsplumb';
 
 @Component({
   selector: 'app-home',
@@ -20,12 +21,15 @@ import {Target} from '../domain/target';
 export class HomeComponent implements OnInit {
   diagram: Diagram;
   zoomLevel: number;
+  x = 0;
+  y = 0;
   activeState: State;
   targetEndpointStyle1: object;
   targetEndpointStyle2: object;
   sourceEndpointStyle1: object;
   sourceEndpointStyle2: object;
   isActiveSetting: boolean;
+  jsPlumbInstance: jsPlumbInstance;
 
   constructor(
     private router: Router,
@@ -38,15 +42,17 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.jsPlumbInstance = jsPlumb.getInstance();
+
     this.zoomLevel = 64;
     this.targetEndpointStyle1 = this.jsPlumbStyleService.getTargetEndpointStyle1();
     this.targetEndpointStyle2 = this.jsPlumbStyleService.getTargetEndpointStyle2();
     this.sourceEndpointStyle1 = this.jsPlumbStyleService.getSourceEndpointStyle1();
     this.sourceEndpointStyle2 = this.jsPlumbStyleService.getSourceEndpointStyle2();
     this.isActiveSetting = false;
-    this.objectHttpService.getDiagram('1b6a7d82-fc1d-4743-ab06-1181f9da1a6b')
+    this.objectHttpService.getDiagram('53e34ea9-4916-4ec0-9c4e-2925654d9320')
       .subscribe(diagram => this.diagram = diagram);
-    console.log(this.diagram);
+    this.diagram = new Diagram([]);
   }
 
   goToModeling() {
@@ -91,4 +97,5 @@ export class HomeComponent implements OnInit {
   changeLanguage(language: string) {
     this.translate.use(language);
   }
+
 }

@@ -18,6 +18,7 @@ import {
 } from '@angular/material';
 import {FlexModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {SortablejsModule} from 'ngx-sortablejs';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatListModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    MatTableModule
+    MatTableModule,
+    SortablejsModule
   ],
   exports: [
     MatButtonModule,

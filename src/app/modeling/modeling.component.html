@@ -1,21 +1,21 @@
 <div fxLayout="row">
-  <div class="schema-container" fxLayout="row">
+  <div class="modeling-container" fxLayout="row">
     <div *ngIf="diagram" class="sidenav-container" fxFlex="25">
-      <!--        <app-modeling-sidenav [activeState]="activeState" [diagram]="diagram" [editable]="false"></app-modeling-sidenav>-->
+      <app-modeling-sidenav [activeState]="activeState" [diagram]="diagram" [editable]="false"></app-modeling-sidenav>
       <app-modeling-sidenav [activeState]="activeState" [diagram]="movedStates" [editable]="true"
-                            [isActiveSettings]="isActiveSetting"
-                            [isActiveState]="isActiveState" [setActiveState]="setActiveState">
+                            (isActiveState)="isActiveState($event)"
+                            (setActiveState)="setActiveState($event)" [isActiveSetting]="isActiveSetting">
       </app-modeling-sidenav>
     </div>
 
-    <div *ngIf="!isActiveSetting" class="schema-container" fxFlex>
+    <div *ngIf="!isActiveSetting" class="modeling-container" fxFlex>
       <mat-toolbar color="primary" fxLayoutAlign="space-between center">
         <mat-toolbar-row>
           <button [matMenuTriggerFor]="diagram_menu" aria-label="" mat-icon-button>
             <mat-icon>menu</mat-icon>
           </button>
           <mat-menu #diagram_menu="matMenu">
-            <button (click)="openDiagram()" mat-menu-item>
+            <button (click)="openDiagram()" mat-menu-item style="text-align: center">
               {{ 'diagram.open' | translate }}
             </button>
           </mat-menu>
@@ -30,9 +30,9 @@
           <button (click)="goToSchema()" mat-raised-button>{{ 'schema.self' | translate }}</button>
         </mat-toolbar-row>
         <mat-toolbar-row>
-          <mat-slider [(ngModel)]="zoomLevel" aria-label="red" class="md-warn" id="red-slider" max="200"
-                      min="10"
-                      step="10">
+          <mat-slider [(ngModel)]="zoomLevel" [max]="200" [min]="10" [step]="10" aria-label="red"
+                      class="md-warn"
+                      id="red-slider">
           </mat-slider>
         </mat-toolbar-row>
 
@@ -41,10 +41,10 @@
             <mat-icon>language</mat-icon>
           </button>
           <mat-menu #language_menu="matMenu">
-            <button (click)="changeLanguage('en')" mat-menu-item>
+            <button (click)="changeLanguage('en')" mat-menu-item style="text-align: center">
               {{ 'language.en' | translate }}
             </button>
-            <button (click)="changeLanguage('ru')" mat-menu-item>
+            <button (click)="changeLanguage('ru')" mat-menu-item style="text-align: center">
               {{ 'language.ru' | translate }}  </button>
           </mat-menu>
         </mat-toolbar-row>

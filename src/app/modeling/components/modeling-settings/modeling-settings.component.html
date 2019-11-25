@@ -1,74 +1,69 @@
-<mat-card class="action-input-container" fxLayout="row">
+<mat-card class="action-input-container" fxLayout="row" fxLayoutAlign="space-between center">
   <mat-icon>call_received</mat-icon>
   <mat-form-field *ngFor="let input of state.inputContainer">
-    <label>{{input.label}}</label>
+    <mat-label>{{input.label}}</mat-label>
     <input [(ngModel)]="input.value" disabled matInput/>
   </mat-form-field>
 </mat-card>
 
-<mat-card class="action-input-container" fxLayout="row">
+<mat-card class="action-input-container" fxLayout="row" fxLayoutAlign="space-between center">
   <mat-icon>call_made</mat-icon>
   <mat-form-field *ngFor="let output of state.outputContainer">
-    <label>{{output.label}}</label>
+    <mat-label>{{output.label}}</mat-label>
     <input [(ngModel)]="output.value" disabled matInput/>
   </mat-form-field>
 </mat-card>
 
-<mat-card fxLayout="column">
-  <mat-card *ngFor="let output of state.outputContainer">
-    <mat-card-header>
-      <mat-icon>call_made</mat-icon>
-      {{output.label}}
-    </mat-card-header>
-    <mat-card-content>
-      <mat-form-field>
-        <label>{{ 'function.enter' | translate }}</label>
-        <input (change)="countFunction([], state)" [(ngModel)]="output.expression" disabled matInput/>
-      </mat-form-field>
-      <mat-form-field>
-        <label>{{ 'function.result' | translate }}</label>
-        <input [(ngModel)]="output.value" disabled matInput/>
-      </mat-form-field>
-    </mat-card-content>
-  </mat-card>
+<mat-card *ngIf="state.outputContainer.length !== 0" fxLayout="column">
+  <mat-card-content *ngFor="let output of state.outputContainer" fxLayout="row" fxLayoutAlign="space-between center">
+    <span class="title-text">{{output.label}}</span>
+    <mat-form-field>
+      <mat-label>{{ 'function.enter' | translate }}</mat-label>
+      <input (change)="countFunction([], state)" [(ngModel)]="output.expression" disabled matInput/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'function.result' | translate }}</mat-label>
+      <input [(ngModel)]="output.value" disabled matInput/>
+    </mat-form-field>
+  </mat-card-content>
 </mat-card>
 
-<mat-card [(ngModel)]="state.settings.actions" class="connectedItems" fxLayout="column" ui-sortable="sortableOptions"
-         ui-sortable-stop="refreshNumbers()">
-  <mat-card *ngFor="let action of state.settings.actions">
-    <mat-card-content>
-      <div fxLayout="row" fxLayoutAlign="space-between center" style="padding:5px">
-        <div class="number">#{{action.number}}</div>
-        <mat-form-field>
-          <label>condition</label>
-          <input [(ngModel)]="action.condition" matInput/>
-        </mat-form-field>
-        <mat-select [(ngModel)]="action.type">
-          <mat-option *ngFor="let a of actions" [value]="a">
-            {{a}}
-          </mat-option>
-        </mat-select>
-        <mat-form-field>
-          <label>value</label>
-          <input [(ngModel)]="action.value" matInput/>
-        </mat-form-field>
-        <button (click)="deleteSettingsAction(action.uuid)" mat-icon-button>
-          <span class="material-icons mat-18">delete_forever</span>
-        </button>
-      </div>
-    </mat-card-content>
+<mat-card>
+  <mat-card [sortablejsOptions]="sortableOptions" [sortablejs]="state.settings.actions" class="connectedItems"
+            fxLayout="column" style="padding: 0 !important;">
+    <mat-card *ngFor="let action of state.settings.actions">
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="space-between center" style="padding:5px">
+          <div class="number title-text">#{{action.number}}</div>
+          <mat-form-field>
+            <mat-label>condition</mat-label>
+            <input [(ngModel)]="action.condition" matInput/>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Type</mat-label>
+            <mat-select [(ngModel)]="action.type">
+              <mat-option *ngFor="let a of actions" [value]="a">
+                {{a}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>value</mat-label>
+            <input [(ngModel)]="action.value" matInput/>
+          </mat-form-field>
+          <button (click)="deleteSettingsAction(action.uuid)" mat-icon-button>
+            <span class="material-icons mat-18">delete_forever</span>
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </mat-card>
   <div fxLayout="row" fxLayoutAlign="space-between center">
-    <mat-form-field class="no-margin">
-      <button (click)="apply()" mat-button>
-        Apply
-      </button>
-    </mat-form-field>
-    <mat-form-field class="no-margin">
-      <button (click)="addSettingsAction(state.uuid)" mat-button>
-        Add
-      </button>
-    </mat-form-field>
+    <button (click)="apply()" mat-button>
+      Apply
+    </button>
+    <button (click)="addSettingsAction(state.uuid)" mat-button>
+      Add
+    </button>
   </div>
 </mat-card>
-

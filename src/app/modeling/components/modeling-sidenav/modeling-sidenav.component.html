@@ -1,12 +1,11 @@
-<!--todo fix ???-->
 <mat-card class="model-sidenav">
-  <mat-card-content [(ngModel)]="diagram.states" class="connectedItems">
+  <mat-card-content [sortablejsOptions]="sortableOptions" [sortablejs]="diagram.states" class="connectedItems">
     <!--todo connect sortable-->
     <!--                    ui-sortable="sortableOptions"-->
     <!--                    ui-sortable-update="refresh()"-->
-    <mat-card (click)="setActiveState(state)" *ngFor="let state of diagram.states">
+    <mat-card (click)="setActiveStateF(state)" *ngFor="let state of diagram.states">
       <mat-card-header>
-        <mat-card-title>
+        <mat-card-title style="width: 100%">
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <span class="title-text">{{state.name}}</span>
             <span class="medium-text">
@@ -19,7 +18,7 @@
         </mat-card-title>
       </mat-card-header>
 
-      <mat-card *ngIf="isActiveState(state)">
+      <mat-card *ngIf="isActiveStateF(state)">
         <div *ngIf="state.source.connections.length">
           <mat-card-content *ngFor="let connection of state.source.connections">
 

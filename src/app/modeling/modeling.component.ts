@@ -18,6 +18,8 @@ import {Variable} from '../domain/variable';
 import {ContainerType} from '../domain/container-type.enum';
 import {ImageHttpService} from './services/http/image-http.service';
 import {ModelingJsPlumbStyleService} from './services/modeling-js-plumb-style.service';
+import {interval, Subscription} from 'rxjs';
+import {ModelingVariable} from '../domain/modeling-variable';
 
 
 @Component({
@@ -41,8 +43,7 @@ export class ModelingComponent implements OnInit {
   imageToUpload: object;
   modelingSettings: ModelingSettings;
   cmdUuid: string;
-  // @ts-ignore
-  timer: NodeJS.Timer; // ??? NodeJS.Timer;
+  subscription: Subscription;
   imageToLoad: File;
 
   constructor(
@@ -70,7 +71,14 @@ export class ModelingComponent implements OnInit {
     };
     this.movedStates = new Diagram([]);
     this.imageToUpload = null;
-
+    this.objectHttpService.getDiagram('53e34ea9-4916-4ec0-9c4e-2925654d9320')
+      .subscribe(diagram => {
+        this.diagram = diagram;
+        // this.movedStates.states = this.diagram.states;
+      });
+    this.modelingSettings = new ModelingSettings(CONSTANTS.MODEL.GENERATOR, 1000, [], [
+      new ModelingVariable('x', 0, 1)
+    ]);
   }
 
   goToSchema() {
@@ -107,58 +115,77 @@ export class ModelingComponent implements OnInit {
     setTimeout(() => this.movedStates.states = bufferedStates);
   }
 
-  startCounter() {
-    if (!this.timer) {
-      this.updateCounter();
+  startCounter(modelingSettings: ModelingSettings) {
+    const timer = interval(modelingSettings.interval);
+    this.subscription = timer.subscribe(i => {
+      this.updateCounter(modelingSettings);
+    });
+    setTimeout(() => this.subscription.unsubscribe(), modelingSettings.interval);
+  }
+
+  stopCount() {
+    switch (this.modelingSettings.type) {
+      case CONSTANTS.MODEL.GENERATOR:
+        setTimeout(() => {
+          this.subscription.unsubscribe();
+          this.subscription = null;
+        });
+        break;
+      case CONSTANTS.MODEL.SOCKET:
+        this.socketHttpService.stopMonitor(this.cmdUuid);
+        break;
     }
   }
 
-  changeParam() {
+  changeParam(modelingSettings: ModelingSettings) {
     this.movedStates.states.forEach(state => {
       state.inputContainer.forEach(item => {
-        const values = this.modelingSettings.vars.find(sVar => sVar.name === item.label);
+        const values = modelingSettings.vars.find(sVar => sVar.name === item.label);
         if (values) {
           item.value = values.startValue;
         }
       });
       this.objectService.countFunction(this.movedStates.states, state);
-
     });
   }
 
-  updateCounter() {
-    this.modelingSettings.vars.forEach(sVar => {
+  updateCounter(modelingSettings: ModelingSettings) {
+    modelingSettings.vars.forEach(sVar => {
       sVar.startValue += sVar.stepValue;
     });
-    this.changeParam();
-    this.timer = setInterval(this.updateCounter, this.modelingSettings.interval);
+    this.changeParam(modelingSettings);
   }
 
   openModelingSettings() {
     const dialogRef = this.dialog.open(StartCountComponent, {
-      data: this.modelingSettings
+      data: this.modelingSettings,
+      panelClass: 'no-dialog-padding'
     });
-
     dialogRef.afterClosed()
       .subscribe(modelingSettings => {
         this.modelingSettings = modelingSettings;
-        switch (this.modelingSettings.type) {
-          case CONSTANTS.MODEL.GENERATOR:
-            this.startCounter();
-            break;
-          case CONSTANTS.MODEL.SOCKET:
-            this.socketService.connect(this.onSocketMessage);
-            this.socketHttpService.startGetState(this.modelingSettings).subscribe(cmdUuid => {
-              this.cmdUuid = cmdUuid;
-            });
-            break;
+
+        console.log(this.modelingSettings);
+
+        if (this.modelingSettings) {
+          switch (this.modelingSettings.type) {
+            case CONSTANTS.MODEL.GENERATOR:
+              this.startCounter(this.modelingSettings);
+              break;
+            case CONSTANTS.MODEL.SOCKET:
+              this.socketService.connect(this.onSocketMessage);
+              this.socketHttpService.startGetState(this.modelingSettings).subscribe(cmdUuid => {
+                this.cmdUuid = cmdUuid;
+              });
+              break;
+          }
         }
       });
+
   }
 
   onSocketMessage(message: string) {
     const out: object = JSON.parse(message);
-    console.log(message);
     this.movedStates.states.forEach(state => {
       if (state.name in out) {
         state.outputContainer = [new Variable('x', out[state.name], ContainerType.OUTPUT, '')];
@@ -167,12 +194,16 @@ export class ModelingComponent implements OnInit {
   }
 
   openDiagram() {
-    const dialogRef = this.dialog.open(OpenDiagramComponent, {});
+    const dialogRef = this.dialog.open(OpenDiagramComponent, {
+      panelClass: 'no-dialog-padding'
+    });
 
     dialogRef.afterClosed()
       .subscribe(diagramUuid => {
         this.objectHttpService.getDiagram(diagramUuid)
-          .subscribe(diagram => this.diagram = diagram);
+          .subscribe(diagram => {
+            this.diagram = diagram;
+          });
       });
   }
 
@@ -180,20 +211,7 @@ export class ModelingComponent implements OnInit {
     this.translate.use(language);
   }
 
-  stopCount() {
-    switch (this.modelingSettings.type) {
-      case CONSTANTS.MODEL.GENERATOR:
-        this.timer.unref(); // todo
-        this.timer = null;
-        break;
-      case CONSTANTS.MODEL.SOCKET:
-        this.socketHttpService.stopMonitor(this.cmdUuid);
-        break;
-    }
-  }
-
   uploadImage() {
-    console.log(this.imageToUpload);
     this.imageHttpService.getImages().subscribe(images => console.log(images));
   }
 
@@ -202,7 +220,6 @@ export class ModelingComponent implements OnInit {
   }
 
   onFilesSelect(files: FileList) {
-    console.log(files);
     if (files) {
       this.imageToLoad = files[0];
       const fileReader = new FileReader();

@@ -26,7 +26,6 @@ export class ObjectHttpService {
   }
 
   deleteState(diagramUuid: string, stateUuid: string) {
-    console.log(`${this.diagramUrl}/${diagramUuid}/state/${stateUuid}`);
     return this.http.delete(`${this.diagramUrl}/${diagramUuid}/state/${stateUuid}`);
   }
 

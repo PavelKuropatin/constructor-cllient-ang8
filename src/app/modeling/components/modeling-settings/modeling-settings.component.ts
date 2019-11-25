@@ -1,13 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {State} from '../../../domain/state';
 import {ObjectService} from '../../../home/services/object.service';
 import CONSTANTS from '../../../config/business-constants';
 import {ObjectHttpService} from '../../../home/services/object-http.service';
+import {SortablejsOptions} from 'ngx-sortablejs';
 
 @Component({
   selector: 'app-modeling-settings',
   templateUrl: './modeling-settings.component.html',
-  styleUrls: ['./modeling-settings.component.scss']
+  styleUrls: ['./modeling-settings.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ModelingSettingsComponent implements OnInit {
   private actions: string[];
@@ -16,6 +18,7 @@ export class ModelingSettingsComponent implements OnInit {
   private countFunction: (states: State[], state: State) => any;
   private sourceLayout: string;
   private targetLayout: string;
+  private sortableOptions: SortablejsOptions;
 
   constructor(
     private objectService: ObjectService,
@@ -28,7 +31,12 @@ export class ModelingSettingsComponent implements OnInit {
     this.icons = Object.keys(CONSTANTS.ENDPOINT_LAYOUTS);
     this.state = this.objectService.getConfigState();
     this.countFunction = this.objectService.countFunction;
-    console.log(this.state);
+    this.sortableOptions = {
+      dragClass: 'connectedItems',
+      onUnchoose: (event: any) => {
+        this.refreshNumbers();
+      }
+    };
     this.sourceLayout = this.getByAnchor(this.state.style.sourceAnchor);
     this.targetLayout = this.getByAnchor(this.state.style.targetAnchor);
   }
@@ -47,7 +55,9 @@ export class ModelingSettingsComponent implements OnInit {
 
 
   refreshNumbers() {
-    this.state.settings.actions.forEach((action, i) => action.number = i + 1);
+    // todo fix
+    const len = this.state.settings.actions.length;
+    this.state.settings.actions.forEach((action, i) => action.number = len - i);
   }
 
   deleteSettingsAction(actionUuid) {
@@ -55,7 +65,6 @@ export class ModelingSettingsComponent implements OnInit {
       .subscribe(_ => {
         this.objectHttpService.getStateSettings(this.state.uuid)
           .subscribe(settings => {
-            console.log(settings);
             this.state.settings = settings;
           });
       });
@@ -64,7 +73,6 @@ export class ModelingSettingsComponent implements OnInit {
   addSettingsAction(stateUuid: string) {
     this.objectHttpService.addSettingsAction(stateUuid)
       .subscribe(settings => {
-        console.log(settings);
         this.state.settings = settings;
       });
   }
