@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ObjectHttpService} from './services/object-http.service';
 import {Diagram} from '../domain/diagram';
-import ROUTES from '../config/route-constants';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {MatDialog} from '@angular/material';
@@ -23,7 +22,8 @@ export class HomeComponent implements OnInit {
   zoomLevel: number;
   x = 0;
   y = 0;
-  activeState: State;
+  // fullState: State;
+  settingsState: State;
   targetEndpointStyle1: object;
   targetEndpointStyle2: object;
   sourceEndpointStyle1: object;
@@ -43,6 +43,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.jsPlumbInstance = jsPlumb.getInstance();
+    this.jsPlumbInstance.setContainer('jsplumb-canvas');
+    console.log(this.jsPlumbInstance);
 
     this.zoomLevel = 64;
     this.targetEndpointStyle1 = this.jsPlumbStyleService.getTargetEndpointStyle1();
@@ -50,17 +52,19 @@ export class HomeComponent implements OnInit {
     this.sourceEndpointStyle1 = this.jsPlumbStyleService.getSourceEndpointStyle1();
     this.sourceEndpointStyle2 = this.jsPlumbStyleService.getSourceEndpointStyle2();
     this.isActiveSetting = false;
+    this.diagram = new Diagram([]);
     this.objectHttpService.getDiagram('53e34ea9-4916-4ec0-9c4e-2925654d9320')
       .subscribe(diagram => this.diagram = diagram);
-    this.diagram = new Diagram([]);
+    this.settingsState = null;
   }
 
   goToModeling() {
-    this.router.navigate([ROUTES.MODELING]);
+    console.log(this.settingsState);
+    // this.router.navigate([ROUTES.MODELING]);
   }
 
-  setActiveState(state: State) {
-    this.activeState = state;
+  showStateSettings(state: State) {
+    this.settingsState = state;
   }
 
   onConnection(instance, connection: Connection, targetUuid: string, sourceUuid: string) {
@@ -98,4 +102,7 @@ export class HomeComponent implements OnInit {
     this.translate.use(language);
   }
 
+  reset() {
+    this.jsPlumbInstance = jsPlumb.getInstance();
+  }
 }

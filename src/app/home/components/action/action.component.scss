@@ -6,37 +6,64 @@
   background-color: #eeeeef;
   color: black;
   font-family: helvetica;
-  padding: 0.5em;
+  padding: 0;
   font-size: 0.9em;
   width: 250px;
 }
 
 .action-input-container {
   height: 70px;
+  width: 100%
 }
 
 .endpoint-style-right {
   position: absolute;
   top: 50%;
-  right: -10px;
+  right: 50%;
 }
 
 .endpoint-style-left {
   position: absolute;
   top: 50%;
-  left: -10px;
+  left: -20px;
 }
 
 
 .endpoint-style-top {
   position: absolute;
   left: 50%;
-  top: -10px;
+  top: -20px;
 }
 
 .endpoint-style-bottom {
   position: absolute;
   left: 50%;
-  bottom: -10px;
+  bottom: -20px;
 }
 
+
+.endpoint-style-right svg {
+  left: 5px !important;
+}
+
+.endpoint-style-left svg {
+  left: -5px !important;
+}
+
+.endpoint-style-top svg {
+  top: -5px !important;
+}
+
+.endpoint-style-bottom svg {
+  top: 5px !important;
+}
+
+//.mat-form-field-wrapper {
+//  width: 90% !important;
+//}
+
+.state-var {
+  max-width: 100px !important;
+  min-width: 50px !important;;
+  width: 50px !important;;
+}

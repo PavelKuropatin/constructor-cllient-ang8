@@ -1,17 +1,56 @@
 <mat-card class="model-sidenav">
-  <mat-card-content [sortablejsOptions]="sortableOptions" [sortablejs]="diagram.states" class="connectedItems">
-    <!--todo connect sortable-->
-    <!--                    ui-sortable="sortableOptions"-->
-    <!--                    ui-sortable-update="refresh()"-->
-    <mat-card (click)="setActiveStateF(state)" *ngFor="let state of diagram.states">
+  <mat-card-content #diagramStates="cdkDropList" (cdkDropListDropped)="transferState($event)"
+                    [cdkDropListConnectedTo]="[modelingStates]"
+                    [cdkDropListData]="diagram.states"
+                    cdkDropList
+                    style="min-height: 50px;">
+    <mat-card (click)="setActiveStateF(state)" *ngFor="let state of diagram.states" cdkDrag>
       <mat-card-header>
         <mat-card-title style="width: 100%">
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <span class="title-text">{{state.name}}</span>
             <span class="medium-text">
-                            {{ 'state.position' | translate }}: [{{state.x| number}}, {{state.y| number}}]
-                        </span>
-            <button (click)="showStateSettings(state)" *ngIf="editable" mat-icon-button>
+              {{ 'state.position' | translate }}: [{{state.x| number}}, {{state.y| number}}]
+            </span>
+          </div>
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card *ngIf="isActiveStateF(state)">
+        <div *ngIf="state.source.connections.length">
+          <mat-card-content *ngFor="let connection of state.source.connections">
+
+            <div class="big-text">{{ 'state.connection.self' | translate }} {{connection.uuid}}
+              <mat-icon (click)="changeVisibility(connection)" *ngIf="connection.isVisible">
+                visibility
+              </mat-icon>
+              <mat-icon (click)="changeVisibility(connection)" *ngIf="connection.isVisible === false">
+                visibility_off
+              </mat-icon>
+            </div>
+
+          </mat-card-content>
+        </div>
+      </mat-card>
+    </mat-card>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="model-sidenav">
+  <mat-card-content #modelingStates="cdkDropList" (cdkDropListDropped)="transferState($event)"
+                    [cdkDropListConnectedTo]="[diagramStates]"
+                    [cdkDropListData]="movedStates.states"
+                    cdkDropList
+                    style="min-height: 50px;">
+    <mat-card (click)="setActiveStateF(state)" *ngFor="let state of movedStates.states" cdkDrag>
+      <mat-card-header>
+        <mat-card-title style="width: 100%">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title-text">{{state.name}}</span>
+            <span class="medium-text">
+              {{ 'state.position' | translate }}: [{{state.x| number}}, {{state.y| number}}]
+            </span>
+            <button (click)="showStateSettings(state)" mat-icon-button>
               <mat-icon>settings_applications</mat-icon>
             </button>
           </div>

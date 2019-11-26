@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {Diagram} from '../../../domain/diagram';
 import {State} from '../../../domain/state';
 import {ObjectService} from '../../services/object.service';
@@ -8,7 +8,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {Variable} from '../../../domain/variable';
 import {AddVariableComponent} from '../dialog/add-variable/add-variable.component';
 import {DeleteVariableComponent} from '../dialog/delete-variable/delete-variable.component';
-import {HomeComponent} from '../../home.component';
 
 @Component({
   selector: 'app-sidenav',
@@ -19,17 +18,18 @@ import {HomeComponent} from '../../home.component';
 export class SidenavComponent implements OnInit {
 
   @Input() diagram: Diagram;
-  @Input() activeState: State;
-  @Input() isActiveSetting: boolean;
-  @Input() isActiveModel: object;
+  @Output() showStateSettingsF: EventEmitter<any> = new EventEmitter<any>();
+
+  fullState: State;
+  settingsState: State;
   partials: string[];
   colors: object;
   INPUT: ContainerType;
   OUTPUT: ContainerType;
 
-  constructor(@Inject(HomeComponent) private parent: HomeComponent,
-              private objectService: ObjectService,
-              private dialog: MatDialog) {
+  constructor(
+    private objectService: ObjectService,
+    private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -50,23 +50,17 @@ export class SidenavComponent implements OnInit {
     });
   }
 
-  setActiveState(state: State) {
-    if (this.activeState === state) {
-      this.activeState = null;
+  showFullState(state: State) {
+    if (this.fullState === state) {
+      this.fullState = null;
     } else {
-      this.activeState = state;
+      this.fullState = state;
+      this.countFunction(this.diagram.states, this.fullState);
     }
-    // this.countFunction(this.diagram.states, this.activeState);
   }
 
-  isActionState(state: State) {
-    return state.template === CONSTANTS.PARTIALS.ACTION;
-  }
-
-  refreshStates() {
-    const bufferedStates = this.diagram.states.splice(0);
-    this.diagram.states = [];
-    setTimeout(() => this.diagram.states = bufferedStates);
+  isFullState(state: State) {
+    return state === this.fullState;
   }
 
   deleteVariable(state: State, type: ContainerType) {
@@ -81,13 +75,14 @@ export class SidenavComponent implements OnInit {
   }
 
   showStateSettings(state) {
-    this.isActiveSetting = !this.isActiveSetting;
-    if (this.isActiveSetting) {
-      this.objectService.setConfigState(state);
+    console.log(this.settingsState);
+    if (this.settingsState === state) {
+      this.settingsState = null;
     } else {
-      this.objectService.setConfigState(null);
+      this.settingsState = state;
+      this.countFunction(this.diagram.states, this.settingsState);
     }
-    this.parent.isActiveSetting = this.isActiveSetting;
+    this.showStateSettingsF.emit(this.settingsState);
   }
 
 

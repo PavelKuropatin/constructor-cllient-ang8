@@ -42,7 +42,7 @@ export class ObjectHttpService {
   }
 
   updateDiagram(diagram: Diagram): Observable<Diagram> {
-    return this.http.put<Diagram>(`${this.diagramUrl}`, diagram);
+    return this.http.put<Diagram>(`${this.diagramUrl}/${diagram.uuid}`, diagram);
   }
 
   getDiagram(uuid: string): Observable<Diagram> {

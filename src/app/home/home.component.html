@@ -1,10 +1,9 @@
 <div fxLayout="row">
   <div *ngIf="diagram" class="sidenav-container" fxFlex="25">
-    <app-sidenav [activeState]="activeState" [diagram]="diagram"
-                 [isActiveSetting]="isActiveSetting">
+    <app-sidenav (showStateSettingsF)="showStateSettings($event)" [diagram]="diagram">
     </app-sidenav>
   </div>
-  <div *ngIf="!isActiveSetting" class="schema-container" fxFlex>
+  <div *ngIf="settingsState === null" class="schema-container" fxFlex>
     <mat-toolbar color="primary">
       <mat-toolbar-row fxLayoutAlign="space-between center">
         <button [matMenuTriggerFor]="diagram_menu" aria-label="Example icon-button with a menu" mat-icon-button>
@@ -43,17 +42,12 @@
       </mat-toolbar-row>
     </mat-toolbar>
 
-    <app-jsplumb-canvas (fOnConnection)="onConnection" [jsPlumbInstance]="jsPlumbInstance" [x]="x" [y]="x"
-                        [zoom]="zoomLevel"
-                        id="container">
-      <app-action (setActiveStateF)="setActiveState"
-                  *ngFor="let state of diagram.states"
-                  [jsPlumbInstance]="jsPlumbInstance"
-                  [state]="state"
-                  [states]="diagram.states"
-      ></app-action>
+    <!--                        (fOnConnection)="onConnection" [jsPlumbInstance]="jsPlumbInstance" [x]="x" [y]="x"-->
+    <!--                        [zoom]="zoomLevel"-->
+    <app-jsplumb-canvas [diagram]="diagram" [jsPlumbInstance]="jsPlumbInstance" cdkDrag id="#jsplumb-canvas">
+
     </app-jsplumb-canvas>
   </div>
 
-  <app-settings *ngIf="isActiveSetting" fxFlex="75"></app-settings>
+  <app-settings *ngIf="settingsState !== null" [state]="settingsState" fxFlex="75"></app-settings>
 </div>

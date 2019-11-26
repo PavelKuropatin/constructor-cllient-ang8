@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {State} from '../../../domain/state';
 import {ObjectService} from '../../services/object.service';
 import {ObjectHttpService} from '../../services/object-http.service';
@@ -9,9 +9,9 @@ import CONSTANTS from '../../../config/business-constants';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
+  @Input() state: State;
   private icons: string[];
-  private state: State;
   private sourceLayout: string;
   private targetLayout: string;
 
@@ -19,6 +19,7 @@ export class SettingsComponent implements OnInit {
     private objectService: ObjectService,
     private objectHttpService: ObjectHttpService,
   ) {
+    console.log(this.state);
   }
 
   countFunction(states: State[], state: State) {
@@ -27,7 +28,6 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.icons = Object.keys(CONSTANTS.ENDPOINT_LAYOUTS);
-    this.state = this.objectService.getConfigState();
     this.sourceLayout = this.getByAnchor(this.state.style.sourceAnchor);
     this.targetLayout = this.getByAnchor(this.state.style.targetAnchor);
   }
@@ -43,6 +43,10 @@ export class SettingsComponent implements OnInit {
       .subscribe(response => console.log(response));
   }
 
+  ngOnDestroy(): void {
+    console.log(this.state);
+  }
+
   private getByAnchor(endpointAnchor: string) {
     switch (endpointAnchor) {
       case CONSTANTS.ANCHOR.TOP_CENTER:
@@ -55,6 +59,5 @@ export class SettingsComponent implements OnInit {
         return 'border_right';
     }
   }
-
 
 }

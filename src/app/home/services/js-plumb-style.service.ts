@@ -7,6 +7,7 @@ export class JsPlumbStyleService {
 
   private targetEndpointStyle1 = {
     endpoint: 'Rectangle',
+    cssClass: 'endpoint-style-left',
     paintStyle: {
       fill: '#BCAAA4',
       width: 10,
@@ -36,6 +37,7 @@ export class JsPlumbStyleService {
       width: 10,
       height: 100
     },
+    cssClass: 'endpoint-style-right',
     isSource: true,
     maxConnections: -1,
     connector: ['Flowchart', {stub: [30, 30], gap: 20, cornerRadius: 10, alwaysRespectStubs: true}],

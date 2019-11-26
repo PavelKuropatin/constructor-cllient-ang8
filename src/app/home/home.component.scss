@@ -31,18 +31,18 @@
   display: inline-block;
 }
 
-js-plumb-canvas {
+app-jsplumb-canvas {
   /*background-image: url(/assets/images/grid_background.gif);*/
   /*background-repeat: repeat;*/
   background: #ECF5F9;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  width: 55000px;
-  height: 55000px;
   position: relative;
-  left: -100px;
-  top: -100px;
+  left: 100px;
+  top: 100px;
+  min-width: 1000px;
+  min-height: 1000px;
+  display: block
 }
-
 mat-toolbar {
   flex-direction: row;
   justify-content: space-between;

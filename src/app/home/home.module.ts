@@ -11,12 +11,10 @@ import {OpenDiagramComponent} from './components/dialog/open-diagram/open-diagra
 import {MaterialModule} from '../material.module';
 import {AddVariableComponent} from './components/dialog/add-variable/add-variable.component';
 import {DeleteVariableComponent} from './components/dialog/delete-variable/delete-variable.component';
-import {JsplumbCanvasComponent} from './components/jsplumb/jsplumb-canvas/jsplumb-canvas.component';
-import {JsplumbObjectComponent} from './components/jsplumb/jsplumb-object/jsplumb-object.component';
-import {JsplumbConnectionComponent} from './components/jsplumb/jsplumb-connection/jsplumb-connection.component';
-import {JsplumbEndpointComponent} from './components/jsplumb/jsplumb-endpoint/jsplumb-endpoint.component';
 import {SettingsComponent} from './components/settings/settings.component';
 import {ActionComponent} from './components/action/action.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {JsplumbCanvasComponent} from './components/jsplumb/jsplumb-canvas/jsplumb-canvas.component';
 
 
 @NgModule({
@@ -26,12 +24,9 @@ import {ActionComponent} from './components/action/action.component';
     OpenDiagramComponent,
     AddVariableComponent,
     DeleteVariableComponent,
-    JsplumbCanvasComponent,
-    JsplumbObjectComponent,
-    JsplumbConnectionComponent,
-    JsplumbEndpointComponent,
     SettingsComponent,
-    ActionComponent
+    ActionComponent,
+    JsplumbCanvasComponent
   ],
   entryComponents: [
     OpenDiagramComponent,
@@ -45,7 +40,8 @@ import {ActionComponent} from './components/action/action.component';
     MaterialModule,
     HttpClientModule,
     HomeRoutingModule,
-    TranslateModule
+    TranslateModule,
+    DragDropModule
   ]
 })
 export class HomeModule {

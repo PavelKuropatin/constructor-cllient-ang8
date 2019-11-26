@@ -6,7 +6,7 @@ import CONSTANTS from '../../../config/business-constants';
 import {ContainerType} from '../../../domain/container-type.enum';
 import {Connection} from '../../../domain/connection';
 import {ModelingComponent} from '../../modeling.component';
-import {SortablejsOptions} from 'ngx-sortablejs';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -18,9 +18,9 @@ import {SortablejsOptions} from 'ngx-sortablejs';
 export class ModelingSidenavComponent implements OnInit {
 
   @Input() diagram: Diagram;
+  @Input() movedStates: Diagram;
   @Input() activeState: State;
   @Input() isActiveSetting: boolean;
-  @Input() editable: boolean;
   @Input() isActiveModel: object;
   @Output() isActiveState: EventEmitter<any> = new EventEmitter<any>();
   @Output() setActiveState: EventEmitter<any> = new EventEmitter<any>();
@@ -28,20 +28,12 @@ export class ModelingSidenavComponent implements OnInit {
   colors = Object.values(CONSTANTS.TYPE_ACTION);
   INPUT = ContainerType.INPUT;
   OUTPUT = ContainerType.OUTPUT;
-  sortableOptions: SortablejsOptions;
 
   constructor(private objectService: ObjectService,
               @Inject(ModelingComponent) private parent: ModelingComponent) {
   }
 
   ngOnInit(): void {
-    // connectWith: '.connectedItems'
-    this.sortableOptions = {
-      group: 'states',
-      onUpdate: (event: any) => {
-        this.refreshStates();
-      }
-    };
   }
 
   changeVisibility(connection: Connection) {
@@ -56,11 +48,7 @@ export class ModelingSidenavComponent implements OnInit {
     this.setActiveState.emit(state);
   }
 
-  refreshStates() {
-    const bufferedStates = this.diagram.states.slice();
-    this.diagram.states = [];
-    setTimeout(() => this.diagram.states = bufferedStates);
-  }
+
 
   showStateSettings(state: State) {
     this.isActiveSetting = !this.isActiveSetting;
@@ -72,4 +60,20 @@ export class ModelingSidenavComponent implements OnInit {
     this.parent.isActiveSetting = this.isActiveSetting;
   }
 
+  transferState(event: CdkDragDrop<State[]>) {
+    console.log('aaa');
+    console.log(event.previousContainer);
+    console.log(event.container);
+    if (event.previousContainer === event.container) {
+      console.log('aaa1');
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      console.log('aaa2');
+
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
+  }
 }

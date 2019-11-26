@@ -1,10 +1,10 @@
 <div fxLayout="row">
   <div class="modeling-container" fxLayout="row">
     <div *ngIf="diagram" class="sidenav-container" fxFlex="25">
-      <app-modeling-sidenav [activeState]="activeState" [diagram]="diagram" [editable]="false"></app-modeling-sidenav>
-      <app-modeling-sidenav [activeState]="activeState" [diagram]="movedStates" [editable]="true"
-                            (isActiveState)="isActiveState($event)"
-                            (setActiveState)="setActiveState($event)" [isActiveSetting]="isActiveSetting">
+      <app-modeling-sidenav (isActiveState)="isActiveState($event)" (setActiveState)="setActiveState($event)"
+                            [activeState]="activeState"
+                            [diagram]="diagram"
+                            [isActiveSetting]="isActiveSetting" [movedStates]="movedStates">
       </app-modeling-sidenav>
     </div>
 

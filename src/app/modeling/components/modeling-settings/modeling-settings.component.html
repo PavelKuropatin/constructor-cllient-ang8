@@ -29,9 +29,9 @@
 </mat-card>
 
 <mat-card>
-  <mat-card [sortablejsOptions]="sortableOptions" [sortablejs]="state.settings.actions" class="connectedItems"
+  <mat-card (cdkDropListDropped)="drop($event)" cdkDropList
             fxLayout="column" style="padding: 0 !important;">
-    <mat-card *ngFor="let action of state.settings.actions">
+    <mat-card *ngFor="let action of state.settings.actions" cdkDrag>
       <mat-card-content>
         <div fxLayout="row" fxLayoutAlign="space-between center" style="padding:5px">
           <div class="number title-text">#{{action.number}}</div>

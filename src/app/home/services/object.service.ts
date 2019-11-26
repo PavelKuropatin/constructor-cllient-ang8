@@ -82,14 +82,18 @@ export class ObjectService {
     parentStates.forEach(parentState => {
       this.applyParentContainer(parentState.outputContainer, state.inputContainer);
     });
-    state.outputContainer.forEach(vatiable => {
-      let expression = vatiable.expression.trim();
+    state.outputContainer.forEach(variable => {
+      let expression = variable.expression.trim();
       state.inputContainer.forEach(item => {
         expression = expression.replace(new RegExp(item.label, 'g'), `${item.value}`);
       });
       try {
-        vatiable.value = math.evaluate(expression).numberValue;
+        const testVal = math.evaluate(expression).numberValue;
+        if (!isNaN(testVal)) {
+          variable.value = testVal;
+        }
       } catch (err) {
+        console.log(err);
       }
     });
   }

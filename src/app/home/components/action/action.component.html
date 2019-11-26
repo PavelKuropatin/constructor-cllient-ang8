@@ -1,24 +1,23 @@
-<app-jsplumb-object (click)="setActiveState(state)"
-                    [jsPlumbInstance]="jsPlumbInstance"
-                    [ngStyle]="{ 'left': state.x, 'top':state.y, 'box-shadow': '0 15px 35px' + state.color}"
-                    [state]="state"
-                    class="action-state jtk-draggable"
-                    id="{{state.uuid}}">
-  <div class="action-input-container" fxLayout="row">
-    <mat-icon>call_received</mat-icon>
-    <mat-form-field *ngFor="let input of state.inputContainer">
-      <mat-label>{{input.label}}</mat-label>
-      <input (change)="countFunction(states,state)" [(ngModel)]="input.value" matInput/>
-    </mat-form-field>
-  </div>
-  <h3 class="cursor-default">{{state.name}}</h3>
-  <div class="action-input-container" fxLayout="row">
-    <mat-icon>call_made</mat-icon>
-    <mat-form-field *ngFor="let output of state.outputContainer">
-      <mat-label>{{output.label}}</mat-label>
-      <input [(ngModel)]="output.value" matInput/>
-    </mat-form-field>
+<div (click)="setActiveState(state)"
+     [ngStyle]="{ 'left': state.x +'px' , 'top':state.y+'px', 'box-shadow': '0 15px 35px ' + state.color}"
+     class="action-state"
+     id="{{state.uuid}}">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <div class="action-input-container" fxLayout="row" fxLayoutAlign="center center">
+      <mat-icon style="padding-right: 10px">call_received</mat-icon>
+      <mat-form-field *ngFor="let input of state.inputContainer" class="state-var">
+        <mat-label>{{input.label}}</mat-label>
+        <input (input)="countFunction(diagram.states, state)" [(ngModel)]="input.value" matInput/>
+      </mat-form-field>
+    </div>
+    <h3 class="cursor-default">{{state.name}}</h3>
+    <div class="action-input-container" fxLayout="row" fxLayoutAlign="center center">
+      <mat-icon style="padding-right: 10px">call_made</mat-icon>
+      <mat-form-field *ngFor="let output of state.outputContainer" class="state-var">
+        <mat-label>{{output.label}}</mat-label>
+        <input [(ngModel)]="output.value" matInput/>
+      </mat-form-field>
+    </div>
   </div>
 
-
-</app-jsplumb-object>
+</div>

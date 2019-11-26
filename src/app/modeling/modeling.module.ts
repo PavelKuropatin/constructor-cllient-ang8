@@ -8,14 +8,11 @@ import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule} from '@angular/forms';
 import {ModelingSidenavComponent} from './components/modeling-sidenav/modeling-sidenav.component';
 import {ModelingSettingsComponent} from './components/modeling-settings/modeling-settings.component';
-import {ModelingJsplumbCanvasComponent} from './components/jsplumb/modeling-jsplumb-canvas/modeling-jsplumb-canvas.component';
-import {ModelingJsplumbObjectComponent} from './components/jsplumb/modeling-jsplumb-object/modeling-jsplumb-object.component';
-import {ModelingJsplumbEndpointComponent} from './components/jsplumb/modeling-jsplumb-endpoint/modeling-jsplumb-endpoint.component';
-import {ModelingJsplumbConnectionComponent} from './components/jsplumb/modeling-jsplumb-connection/modeling-jsplumb-connection.component';
 import {MaterialModule} from '../material.module';
 import {HttpClientModule} from '@angular/common/http';
 import {OpenDiagramComponent} from '../home/components/dialog/open-diagram/open-diagram.component';
 import {SortablejsModule} from 'ngx-sortablejs';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -23,11 +20,7 @@ import {SortablejsModule} from 'ngx-sortablejs';
     ModelingComponent,
     StartCountComponent,
     ModelingSidenavComponent,
-    ModelingSettingsComponent,
-    ModelingJsplumbCanvasComponent,
-    ModelingJsplumbObjectComponent,
-    ModelingJsplumbEndpointComponent,
-    ModelingJsplumbConnectionComponent
+    ModelingSettingsComponent
   ],
   entryComponents: [
     OpenDiagramComponent,
@@ -41,7 +34,8 @@ import {SortablejsModule} from 'ngx-sortablejs';
     ModelingRoutingModule,
     TranslateModule,
     FormsModule,
-    SortablejsModule
+    SortablejsModule,
+    DragDropModule
   ]
 })
 export class ModelingModule {

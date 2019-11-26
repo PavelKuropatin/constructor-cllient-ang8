@@ -4,6 +4,8 @@ import {ObjectService} from '../../../home/services/object.service';
 import CONSTANTS from '../../../config/business-constants';
 import {ObjectHttpService} from '../../../home/services/object-http.service';
 import {SortablejsOptions} from 'ngx-sortablejs';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {Action} from '../../../domain/action';
 
 @Component({
   selector: 'app-modeling-settings',
@@ -55,9 +57,7 @@ export class ModelingSettingsComponent implements OnInit {
 
 
   refreshNumbers() {
-    // todo fix
-    const len = this.state.settings.actions.length;
-    this.state.settings.actions.forEach((action, i) => action.number = len - i);
+    this.state.settings.actions.forEach((action, i) => action.number = i + 1);
   }
 
   deleteSettingsAction(actionUuid) {
@@ -75,6 +75,11 @@ export class ModelingSettingsComponent implements OnInit {
       .subscribe(settings => {
         this.state.settings = settings;
       });
+  }
+
+  drop(event: CdkDragDrop<Action[]>) {
+    moveItemInArray(this.state.settings.actions, event.previousIndex, event.currentIndex);
+    this.refreshNumbers();
   }
 
   private getByAnchor(endpointAnchor: string) {
