@@ -56,7 +56,8 @@ import {SortablejsModule} from 'ngx-sortablejs';
     MatInputModule,
     MatListModule,
     MatDialogModule,
-    MatTableModule
+    MatTableModule,
+    BrowserAnimationsModule
   ]
 })
 export class MaterialModule {

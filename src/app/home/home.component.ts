@@ -10,7 +10,7 @@ import {State} from '../domain/state';
 import {OpenDiagramComponent} from './components/dialog/open-diagram/open-diagram.component';
 import {Connection} from '../domain/connection';
 import {Target} from '../domain/target';
-import {jsPlumb, jsPlumbInstance} from 'jsplumb';
+import {Canvas} from '../domain/canvas';
 
 @Component({
   selector: 'app-home',
@@ -19,9 +19,7 @@ import {jsPlumb, jsPlumbInstance} from 'jsplumb';
 })
 export class HomeComponent implements OnInit {
   diagram: Diagram;
-  zoomLevel: number;
-  x = 0;
-  y = 0;
+  canvas: Canvas;
   // fullState: State;
   settingsState: State;
   targetEndpointStyle1: object;
@@ -29,7 +27,6 @@ export class HomeComponent implements OnInit {
   sourceEndpointStyle1: object;
   sourceEndpointStyle2: object;
   isActiveSetting: boolean;
-  jsPlumbInstance: jsPlumbInstance;
 
   constructor(
     private router: Router,
@@ -42,11 +39,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.jsPlumbInstance = jsPlumb.getInstance();
-    this.jsPlumbInstance.setContainer('jsplumb-canvas');
-    console.log(this.jsPlumbInstance);
-
-    this.zoomLevel = 64;
+    this.canvas = new Canvas(80);
     this.targetEndpointStyle1 = this.jsPlumbStyleService.getTargetEndpointStyle1();
     this.targetEndpointStyle2 = this.jsPlumbStyleService.getTargetEndpointStyle2();
     this.sourceEndpointStyle1 = this.jsPlumbStyleService.getSourceEndpointStyle1();
@@ -59,7 +52,7 @@ export class HomeComponent implements OnInit {
   }
 
   goToModeling() {
-    console.log(this.settingsState);
+    console.log(this.canvas);
     // this.router.navigate([ROUTES.MODELING]);
   }
 
@@ -102,7 +95,4 @@ export class HomeComponent implements OnInit {
     this.translate.use(language);
   }
 
-  reset() {
-    this.jsPlumbInstance = jsPlumb.getInstance();
-  }
 }

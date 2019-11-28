@@ -75,7 +75,6 @@ export class SidenavComponent implements OnInit {
   }
 
   showStateSettings(state) {
-    console.log(this.settingsState);
     if (this.settingsState === state) {
       this.settingsState = null;
     } else {

@@ -15,6 +15,7 @@ import {SettingsComponent} from './components/settings/settings.component';
 import {ActionComponent} from './components/action/action.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {JsplumbCanvasComponent} from './components/jsplumb/jsplumb-canvas/jsplumb-canvas.component';
+import {JsplumbEndpointComponent} from './components/jsplumb/jsplumb-endpoint/jsplumb-endpoint.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {JsplumbCanvasComponent} from './components/jsplumb/jsplumb-canvas/jsplum
     DeleteVariableComponent,
     SettingsComponent,
     ActionComponent,
-    JsplumbCanvasComponent
+    JsplumbCanvasComponent,
+    JsplumbEndpointComponent
   ],
   entryComponents: [
     OpenDiagramComponent,

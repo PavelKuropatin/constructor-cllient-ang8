@@ -5,7 +5,7 @@
   position: absolute;
   background-color: #eeeeef;
   color: black;
-  font-family: helvetica;
+  font-family: helvetica, sans-serif;
   padding: 0;
   font-size: 0.9em;
   width: 250px;
@@ -19,48 +19,27 @@
 .endpoint-style-right {
   position: absolute;
   top: 50%;
-  right: 50%;
+  right: -10px;
 }
 
 .endpoint-style-left {
   position: absolute;
   top: 50%;
-  left: -20px;
+  left: -10px;
 }
 
 
 .endpoint-style-top {
   position: absolute;
   left: 50%;
-  top: -20px;
+  top: -10px;
 }
 
 .endpoint-style-bottom {
   position: absolute;
   left: 50%;
-  bottom: -20px;
+  bottom: -10px;
 }
-
-
-.endpoint-style-right svg {
-  left: 5px !important;
-}
-
-.endpoint-style-left svg {
-  left: -5px !important;
-}
-
-.endpoint-style-top svg {
-  top: -5px !important;
-}
-
-.endpoint-style-bottom svg {
-  top: 5px !important;
-}
-
-//.mat-form-field-wrapper {
-//  width: 90% !important;
-//}
 
 .state-var {
   max-width: 100px !important;

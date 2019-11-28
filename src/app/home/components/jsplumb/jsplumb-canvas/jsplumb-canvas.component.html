@@ -1,3 +1,6 @@
-<div>
-  <ng-content></ng-content>
-</div>
+<app-action
+  *ngFor="let state of diagram.states"
+  [diagram]="diagram"
+  [ngStyle]="{ 'left.px' : state.x, 'top.px' : state.y}"
+  [state]="state"
+></app-action>

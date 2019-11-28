@@ -93,7 +93,6 @@ export class ObjectService {
           variable.value = testVal;
         }
       } catch (err) {
-        console.log(err);
       }
     });
   }

@@ -25,7 +25,7 @@
         <button (click)="goToModeling()" mat-raised-button>{{ 'model.self' | translate }}</button>
       </mat-toolbar-row>
       <mat-toolbar-row>
-        <mat-slider [(ngModel)]="zoomLevel" [max]="200" [min]="0" [step]="10" aria-label="red"
+        <mat-slider [(ngModel)]="canvas.zoom" [max]="200" [min]="0" [step]="10" aria-label="red"
                     class="mat-warn"></mat-slider>
       </mat-toolbar-row>
       <mat-toolbar-row fxLayoutAlign="end center">
@@ -42,9 +42,8 @@
       </mat-toolbar-row>
     </mat-toolbar>
 
-    <!--                        (fOnConnection)="onConnection" [jsPlumbInstance]="jsPlumbInstance" [x]="x" [y]="x"-->
-    <!--                        [zoom]="zoomLevel"-->
-    <app-jsplumb-canvas [diagram]="diagram" [jsPlumbInstance]="jsPlumbInstance" cdkDrag id="#jsplumb-canvas">
+    <!--                            (fOnConnection)="onConnection" [jsPlumbInstance]="jsPlumbInstance" [x]="x" [y]="x"-->
+    <app-jsplumb-canvas [canvas]="canvas" [diagram]="diagram" id="jsplumb-canvas">
 
     </app-jsplumb-canvas>
   </div>

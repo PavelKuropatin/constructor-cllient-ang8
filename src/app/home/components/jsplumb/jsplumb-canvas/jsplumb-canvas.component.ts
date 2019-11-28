@@ -1,7 +1,8 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {jsPlumbInstance} from 'jsplumb';
+import {AfterViewInit, Component, DoCheck, Input, KeyValueChanges, KeyValueDiffer, KeyValueDiffers, OnInit} from '@angular/core';
+import {jsPlumb, jsPlumbInstance} from 'jsplumb';
 import 'jquery-ui';
 import {Diagram} from '../../../../domain/diagram';
+import {Canvas} from '../../../../domain/canvas';
 
 declare var $: any;
 
@@ -10,70 +11,83 @@ declare var $: any;
   templateUrl: './jsplumb-canvas.component.html',
   styleUrls: ['./jsplumb-canvas.component.scss']
 })
-export class JsplumbCanvasComponent implements OnInit, AfterViewInit {
+export class JsplumbCanvasComponent implements OnInit, AfterViewInit, DoCheck {
 
-  // @Input() zoom: number;
-  // @Input() x: number;
-  // @Input() y: number;
-  // @Output() fOnConnection: EventEmitter<any> = new EventEmitter<any>();
+  @Input() canvas: Canvas;
   @Input() diagram: Diagram;
 
-  @Input() jsPlumbInstance: jsPlumbInstance;
-  private rootViewContainer: any;
+  jsPlumbInstance: jsPlumbInstance;
 
-  constructor() {
+  private canvasWatcher: KeyValueDiffer<string, any>;
+  private jsPlumbCanvas: any;
+
+  constructor(private differs: KeyValueDiffers) {
   }
 
   ngOnInit() {
-
+    this.jsPlumbInstance = jsPlumb.getInstance();
+    this.canvasWatcher = this.differs.find(this.canvas).create();
   }
 
   ngAfterViewInit(): void {
+    this.jsPlumbCanvas = $('#jsplumb-canvas');
+    this.jsPlumbInstance.setContainer(this.jsPlumbCanvas);
 
-    // const container = $('#container');
-    // this.jsPlumbInstance.bind('connection', (info, originalEvent) => {
-    //   if (originalEvent && originalEvent.type === 'mouseup') {
-    //     const targetUuid = $(info.target).attr('uuid');
-    //     const sourceUuid = $(info.source).attr('uuid');
-    //     this.fOnConnection.emit([this.jsPlumbInstance, info.connection, targetUuid, sourceUuid]);
-    //   }
-    // });
-
-    // this.jsPlumbInstance.setContainer(container);
-
-    // const zoom = (typeof this.zoom === 'undefined') ? 1 : this.zoom / 100;
-    // this.zoomJsPlumbCanvas(this.jsPlumbInstance, zoom, $(container)[0]);
-
-    // scope.$watch('zoom', (newVal, oldVal) => {
-    //   jsPlumbZoomCanvas(instance, newVal / 100, $(element)[0]);
-    // });
-
-    // $(container).bind('mousewheel', (e) => {
-    //   if (e.originalEvent.wheelDelta / 200 > 0) {
-    //     if (this.zoom < 200) {
-    //       this.zoom += 10;
-    //     }
-    //   } else {
-    //     if (this.zoom >= 20) {
-    //       this.zoom -= 10;
-    //     }
-    //   }
-    // });
-
-  }
-
-  zoomJsPlumbCanvas(instance: jsPlumbInstance, zoom: number, el, transformOrigin?) {
-    transformOrigin = transformOrigin || [0, 0];
-    const p = ['webkit', 'moz', 'ms', 'o'];
-    const s = 'scale(' + zoom + ')';
-    const oString = (transformOrigin[0] * 100) + '% ' + (transformOrigin[1] * 100) + '%';
-    p.forEach((value) => {
-      el.style[value + 'Transform'] = s;
-      el.style[value + 'TransformOrigin'] = oString;
+    this.jsPlumbCanvas.draggable({
+      stop: () => {
+        const position = $(this.jsPlumbCanvas).position();
+        this.canvas.x = position.left;
+        this.canvas.y = position.top;
+      }
     });
-    el.style.transform = s;
-    el.style.transformOrigin = oString;
-    // instance.setZoom(zoom);
+
+    this.zoomJsPlumbCanvas();
+
+    $(this.jsPlumbCanvas).on('mousewheel', (e) => {
+
+      if (e.originalEvent.wheelDelta / 200 > 0) {
+        if (this.canvas.zoom < 200) {
+          this.canvas.zoom += 10;
+        }
+      } else {
+        if (this.canvas.zoom >= 20) {
+          this.canvas.zoom -= 10;
+        }
+      }
+    });
+
+    this.jsPlumbInstance.bind('connection', (info, originalEvent) => {
+      if (originalEvent && originalEvent.type === 'mouseup') {
+        const targetUuid = $(info.target).attr('uuid');
+        const sourceUuid = $(info.source).attr('uuid');
+        console.log(sourceUuid);
+        console.log(targetUuid);
+      }
+    });
   }
 
+  canvasChanged(changes: KeyValueChanges<string, any>) {
+    let zoom = null;
+    changes.forEachChangedItem(r => {
+      if (r.key === 'zoom') {
+        zoom = r.currentValue;
+      }
+    });
+    if (zoom) {
+      this.canvas.zoom = zoom;
+      this.zoomJsPlumbCanvas();
+    }
+  }
+
+  zoomJsPlumbCanvas() {
+    const zoom = (typeof this.canvas.zoom === 'undefined') ? 1 : this.canvas.zoom / 100;
+    this.jsPlumbCanvas.css('transform', `scale(${zoom})`);
+  }
+
+  ngDoCheck(): void {
+    const changes = this.canvasWatcher.diff(this.canvas);
+    if (changes) {
+      this.canvasChanged(changes);
+    }
+  }
 }
