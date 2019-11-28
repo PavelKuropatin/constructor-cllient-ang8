@@ -42,8 +42,9 @@
       </mat-toolbar-row>
     </mat-toolbar>
 
-    <!--                            (fOnConnection)="onConnection" [jsPlumbInstance]="jsPlumbInstance" [x]="x" [y]="x"-->
-    <app-jsplumb-canvas [canvas]="canvas" [diagram]="diagram" id="jsplumb-canvas">
+    <!--                             [jsPlumbInstance]="jsPlumbInstance" [x]="x" [y]="x"-->
+    <app-jsplumb-canvas (onConnection)="addConnection($event)" [canvas]="canvas" [diagram]="diagram"
+                        id="jsplumb-canvas">
 
     </app-jsplumb-canvas>
   </div>

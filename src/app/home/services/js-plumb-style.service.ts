@@ -10,7 +10,7 @@ export class JsPlumbStyleService {
     cssClass: 'endpoint-style-left',
     paintStyle: {
       fill: '#BCAAA4',
-      width: 10,
+      width: 20,
       height: 100
     },
     maxConnections: -1,
@@ -22,7 +22,7 @@ export class JsPlumbStyleService {
     paintStyle: {
       fill: '#BCAAA4',
       width: 100,
-      height: 10
+      height: 20
     },
     maxConnections: -1,
     isTarget: true
@@ -34,7 +34,7 @@ export class JsPlumbStyleService {
       stroke: '#BCAAA4',
       fill: 'transparent',
       strokeWidth: 3,
-      width: 10,
+      width: 20,
       height: 100
     },
     cssClass: 'endpoint-style-right',
@@ -57,7 +57,7 @@ export class JsPlumbStyleService {
       fill: 'transparent',
       strokeWidth: 3,
       width: 100,
-      height: 10
+      height: 20
     },
     isSource: true,
     maxConnections: -1,

@@ -43,6 +43,7 @@ export class ActionComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+
     this.jsPlumbInstance.draggable(this.state.uuid, {
       drag: (event) => {
         this.state.x = event.pos[0];

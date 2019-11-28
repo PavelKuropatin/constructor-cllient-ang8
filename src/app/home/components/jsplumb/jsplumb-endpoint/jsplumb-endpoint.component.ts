@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {ActionComponent} from '../../action/action.component';
 import {jsPlumbInstance} from 'jsplumb';
+import {State} from '../../../../domain/state';
 
 @Component({
   selector: 'app-jsplumb-endpoint',
@@ -11,9 +12,11 @@ export class JsplumbEndpointComponent implements OnInit, AfterViewInit, OnDestro
 
   @Input() anchor: string;
   @Input() uuid: string;
+  @Input() state: State;
   @Input() settings: object;
   jsPlumbInstance: jsPlumbInstance;
   private endpoint: any;
+  private stateUuid: string;
 
   constructor(
     @Inject(ActionComponent) private parent: ActionComponent
@@ -31,7 +34,7 @@ export class JsplumbEndpointComponent implements OnInit, AfterViewInit, OnDestro
       uuid: this.uuid
     };
     // @ts-ignore
-    this.endpoint = this.jsPlumbInstance.addEndpoint(this.uuid, this.settings, options);
+    this.endpoint = this.jsPlumbInstance.addEndpoint(this.state.uuid, this.settings, options);
   }
 
   ngOnDestroy(): void {

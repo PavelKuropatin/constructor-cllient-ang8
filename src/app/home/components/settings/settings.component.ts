@@ -19,7 +19,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private objectService: ObjectService,
     private objectHttpService: ObjectHttpService,
   ) {
-    console.log(this.state);
+
   }
 
   countFunction(states: State[], state: State) {
@@ -44,7 +44,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log(this.state);
+
   }
 
   private getByAnchor(endpointAnchor: string) {

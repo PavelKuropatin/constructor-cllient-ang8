@@ -9,7 +9,6 @@ import {JsPlumbStyleService} from './services/js-plumb-style.service';
 import {State} from '../domain/state';
 import {OpenDiagramComponent} from './components/dialog/open-diagram/open-diagram.component';
 import {Connection} from '../domain/connection';
-import {Target} from '../domain/target';
 import {Canvas} from '../domain/canvas';
 
 @Component({
@@ -60,13 +59,19 @@ export class HomeComponent implements OnInit {
     this.settingsState = state;
   }
 
-  onConnection(instance, connection: Connection, targetUuid: string, sourceUuid: string) {
-    this.diagram.states.forEach(state => {
-      if (state.source.uuid === sourceUuid) {
-        state.source.connections.push(new Connection(new Target(targetUuid), true));
-      }
-    });
-    this.objectService.updateContainer(this.diagram.states, sourceUuid, targetUuid);
+  addConnection(data, instance?, connection?) {
+    const stateSourceUuid = data.source;
+    const stateTargetUuid = data.target;
+
+    const sourceState = this.diagram.states.find(s => s.uuid === stateSourceUuid);
+    const targetState = this.diagram.states.find(s => s.uuid === stateTargetUuid);
+
+    this.diagram.states
+      .find(s => s.uuid === stateSourceUuid)
+      .source.connections.push(new Connection(targetState.target, true));
+
+    this.objectService.updateContainer(this.diagram.states, sourceState, targetState);
+
     this.updateDiagram();
   }
 

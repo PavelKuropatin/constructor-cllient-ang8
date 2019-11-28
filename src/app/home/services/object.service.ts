@@ -64,9 +64,10 @@ export class ObjectService {
       });
   }
 
-  updateContainer(states: State[], sourceUuid: string, targetUuid: string) {
-    const inputContainer = this.findStateByTarget(states, targetUuid).inputContainer;
-    this.findStateBySource(states, sourceUuid).outputContainer
+  updateContainer(states: State[], sourceState: State, targetState: State) {
+    const inputContainer = targetState.inputContainer;
+
+    sourceState.outputContainer
       .forEach(oVar => {
         const tmpVar = inputContainer.find(iVar => iVar.label === oVar.label);
         if (tmpVar) {
@@ -107,7 +108,7 @@ export class ObjectService {
 
   private getParentStates(states: State[], target: Target) {
     return states.filter(state => {
-      return state.source.connections.find(connection => connection.uuid === target);
+      return state.source.connections.find(connection => connection.target === target);
     });
   }
 

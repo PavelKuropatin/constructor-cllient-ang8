@@ -20,7 +20,7 @@
         <div *ngIf="state.source.connections.length">
           <mat-card-content *ngFor="let connection of state.source.connections">
 
-            <div class="big-text">{{ 'state.connection.self' | translate }} {{connection.uuid}}
+            <div class="big-text">{{ 'state.connection.self' | translate }} {{connection.target}}
               <mat-icon (click)="changeVisibility(connection)" *ngIf="connection.isVisible">
                 visibility
               </mat-icon>
@@ -61,7 +61,7 @@
         <div *ngIf="state.source.connections.length">
           <mat-card-content *ngFor="let connection of state.source.connections">
 
-            <div class="big-text">{{ 'state.connection.self' | translate }} {{connection.uuid}}
+            <div class="big-text">{{ 'state.connection.self' | translate }} {{connection.target}}
               <mat-icon (click)="changeVisibility(connection)" *ngIf="connection.isVisible">
                 visibility
               </mat-icon>

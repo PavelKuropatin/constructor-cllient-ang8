@@ -1,4 +1,15 @@
-import {AfterViewInit, Component, DoCheck, Input, KeyValueChanges, KeyValueDiffer, KeyValueDiffers, OnInit} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DoCheck,
+  EventEmitter,
+  Input,
+  KeyValueChanges,
+  KeyValueDiffer,
+  KeyValueDiffers,
+  OnInit,
+  Output
+} from '@angular/core';
 import {jsPlumb, jsPlumbInstance} from 'jsplumb';
 import 'jquery-ui';
 import {Diagram} from '../../../../domain/diagram';
@@ -15,7 +26,7 @@ export class JsplumbCanvasComponent implements OnInit, AfterViewInit, DoCheck {
 
   @Input() canvas: Canvas;
   @Input() diagram: Diagram;
-
+  @Output() onConnection: EventEmitter<any> = new EventEmitter<any>();
   jsPlumbInstance: jsPlumbInstance;
 
   private canvasWatcher: KeyValueDiffer<string, any>;
@@ -58,12 +69,14 @@ export class JsplumbCanvasComponent implements OnInit, AfterViewInit, DoCheck {
 
     this.jsPlumbInstance.bind('connection', (info, originalEvent) => {
       if (originalEvent && originalEvent.type === 'mouseup') {
-        const targetUuid = $(info.target).attr('uuid');
-        const sourceUuid = $(info.source).attr('uuid');
-        console.log(sourceUuid);
-        console.log(targetUuid);
+        const targetStateUuid = $(info.target).attr('id');
+        const sourceStateUuid = $(info.source).attr('id');
+        this.onConnection.emit({source: sourceStateUuid, target: targetStateUuid});
       }
     });
+
+    setTimeout(() => this.showConnections(), 1000);
+
   }
 
   canvasChanged(changes: KeyValueChanges<string, any>) {
@@ -84,10 +97,34 @@ export class JsplumbCanvasComponent implements OnInit, AfterViewInit, DoCheck {
     this.jsPlumbCanvas.css('transform', `scale(${zoom})`);
   }
 
+  showConnections() {
+    this.diagram.states.forEach(state => {
+
+      const sourceUuid = state.source.uuid;
+      state.source.connections.forEach(connection => {
+        const params = {
+          uuids: [
+            sourceUuid,
+            connection.target.uuid
+          ],
+          paintStyle: {
+            strokeWidth: 6,
+            stroke: '#61B7CF'
+          },
+          connector: ['Flowchart', {stub: [30, 30], gap: 20, cornerRadius: 10, alwaysRespectStubs: true}]
+        };
+        // @ts-ignore
+        this.jsPlumbInstance.connect(params);
+      });
+    });
+
+  }
+
   ngDoCheck(): void {
     const changes = this.canvasWatcher.diff(this.canvas);
     if (changes) {
       this.canvasChanged(changes);
     }
   }
+
 }

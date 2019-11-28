@@ -21,14 +21,21 @@
 
   <app-jsplumb-endpoint [anchor]="state.style.sourceAnchor"
                         [settings]="((state.style.sourceAnchor === CONSTANTS.ANCHOR.LEFT_MIDDLE || state.style.sourceAnchor === CONSTANTS.ANCHOR.RIGHT_MIDDLE) ? se1 : se2)"
+                        [state]="state"
                         [uuid]="state.source.uuid"
                         class="{{state.style.sourceEndpoint}}"
                         id="{{state.source.uuid}}"></app-jsplumb-endpoint>
 
   <app-jsplumb-endpoint [anchor]="state.style.targetAnchor"
                         [settings]="((state.style.targetAnchor === CONSTANTS.ANCHOR.LEFT_MIDDLE || state.style.targetAnchor === CONSTANTS.ANCHOR.RIGHT_MIDDLE) ? te1 : te2)"
+                        [state]="state"
                         [uuid]="state.target.uuid"
                         class="{{state.style.targetEndpoint}}"
                         id="{{state.target.uuid}}"></app-jsplumb-endpoint>
+
+  <!--  <div *ngFor="let connection of state.source.connections">-->
+  <!--    <app-jsplumb-connection *ngIf="connection.isVisible" [connection]="connection">-->
+  <!--    </app-jsplumb-connection>-->
+  <!--  </div>-->
 
 </div>

@@ -96,7 +96,7 @@
           <div *ngFor="let connection of state.source.connections; let i = index">
             <mat-card>
               <mat-card-header>
-                <mat-card-title>{{ 'state.connection.self' | translate }} {{connection.uuid}}</mat-card-title>
+                <mat-card-title>{{ 'state.connection.self' | translate }} {{connection.target}}</mat-card-title>
                 <button (click)="removeIndex(i, state.source.connections)" mat-icon-button>
                   <mat-icon>delete_sweep</mat-icon>
                 </button>
