@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {Diagram} from '../domain/diagram';
-import {State} from '../domain/state';
+import {Schema} from '../domain/schema';
+import {Block} from '../domain/block';
 import {Router} from '@angular/router';
 import {ObjectHttpService} from '../home/services/object-http.service';
 import {ObjectService} from '../home/services/object.service';
@@ -29,16 +29,16 @@ import {ModelingVariable} from '../domain/modeling-variable';
   encapsulation: ViewEncapsulation.None
 })
 export class ModelingComponent implements OnInit {
-  diagram: Diagram;
+  diagram: Schema;
   zoomLevel: number;
-  activeState: State;
+  activeState: Block;
   targetEndpointStyle1: object;
   targetEndpointStyle2: object;
   sourceEndpointStyle1: object;
   sourceEndpointStyle2: object;
   sortableOptions: object;
   isActiveSetting: boolean;
-  movedStates: Diagram;
+  movedStates: Schema;
   backgroundImg: any;
   imageToUpload: object;
   modelingSettings: ModelingSettings;
@@ -69,7 +69,7 @@ export class ModelingComponent implements OnInit {
     this.sortableOptions = {
       connectWith: '.connectedItems'
     };
-    this.movedStates = new Diagram([]);
+    this.movedStates = new Schema([]);
     this.imageToUpload = null;
     this.objectHttpService.getDiagram('53e34ea9-4916-4ec0-9c4e-2925654d9320')
       .subscribe(diagram => {
@@ -89,7 +89,7 @@ export class ModelingComponent implements OnInit {
     this.movedStates.states = this.movedStates.states.splice(0, this.movedStates.states.length);
   }
 
-  setActiveState(state: State) {
+  setActiveState(state: Block) {
     this.activeState = state;
   }
 
@@ -97,11 +97,11 @@ export class ModelingComponent implements OnInit {
     connection.isVisible = !connection.isVisible;
   }
 
-  isActiveState(state: State) {
+  isActiveState(state: Block) {
     return this.activeState === state;
   }
 
-  resetStates(diagram: Diagram) {
+  resetStates(diagram: Schema) {
     diagram.states.forEach(state => {
       state.template = `custom_${state.template}`;
       state.x = 10;

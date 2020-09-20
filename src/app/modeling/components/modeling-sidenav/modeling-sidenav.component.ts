@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {Diagram} from '../../../domain/diagram';
-import {State} from '../../../domain/state';
+import {Schema} from '../../../domain/schema';
+import {Block} from '../../../domain/block';
 import {ObjectService} from '../../../home/services/object.service';
 import CONSTANTS from '../../../config/business-constants';
 import {ContainerType} from '../../../domain/container-type.enum';
@@ -17,9 +17,9 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 })
 export class ModelingSidenavComponent implements OnInit {
 
-  @Input() diagram: Diagram;
-  @Input() movedStates: Diagram;
-  @Input() activeState: State;
+  @Input() diagram: Schema;
+  @Input() movedStates: Schema;
+  @Input() activeState: Block;
   @Input() isActiveSetting: boolean;
   @Input() isActiveModel: object;
   @Output() isActiveState: EventEmitter<any> = new EventEmitter<any>();
@@ -40,17 +40,17 @@ export class ModelingSidenavComponent implements OnInit {
     connection.isVisible = !connection.isVisible;
   }
 
-  isActiveStateF(state: State) {
+  isActiveStateF(state: Block) {
     this.isActiveState.emit(state);
   }
 
-  setActiveStateF(state: State) {
+  setActiveStateF(state: Block) {
     this.setActiveState.emit(state);
   }
 
 
 
-  showStateSettings(state: State) {
+  showStateSettings(state: Block) {
     this.isActiveSetting = !this.isActiveSetting;
     if (this.isActiveSetting) {
       this.objectService.setConfigState(state);
@@ -60,7 +60,7 @@ export class ModelingSidenavComponent implements OnInit {
     this.parent.isActiveSetting = this.isActiveSetting;
   }
 
-  transferState(event: CdkDragDrop<State[]>) {
+  transferState(event: CdkDragDrop<Block[]>) {
     console.log('aaa');
     console.log(event.previousContainer);
     console.log(event.container);

@@ -1,6 +1,6 @@
 import {Connection} from './connection';
 
-export class Source {
+export class Input {
   uuid: string;
   connections: Connection[];
 }

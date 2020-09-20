@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {State} from '../../../domain/state';
+import {Block} from '../../../domain/block';
 import {ObjectService} from '../../services/object.service';
 import {ObjectHttpService} from '../../services/object-http.service';
 import CONSTANTS from '../../../config/business-constants';
@@ -10,7 +10,7 @@ import CONSTANTS from '../../../config/business-constants';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit, OnDestroy {
-  @Input() state: State;
+  @Input() state: Block;
   private icons: string[];
   private sourceLayout: string;
   private targetLayout: string;
@@ -22,7 +22,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   }
 
-  countFunction(states: State[], state: State) {
+  countFunction(states: Block[], state: Block) {
     this.objectService.countFunction(states, state);
   }
 

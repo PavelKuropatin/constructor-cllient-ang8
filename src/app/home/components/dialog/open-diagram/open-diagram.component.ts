@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
-import {Diagram} from '../../../../domain/diagram';
+import {Schema} from '../../../../domain/schema';
 import {ObjectHttpService} from '../../../services/object-http.service';
 
 @Component({
@@ -11,7 +11,7 @@ import {ObjectHttpService} from '../../../services/object-http.service';
 })
 export class OpenDiagramComponent implements OnInit {
 
-  diagrams: Diagram[];
+  diagrams: Schema[];
   chosenUuid: string;
   displayedColumns: string[];
   diagramColumns: string[];

@@ -1,10 +1,10 @@
 import {Variable} from './variable';
-import {Source} from './source';
-import {Target} from './target';
+import {Input} from './input';
+import {Output} from './output';
 import {Style} from './style';
 import {Settings} from './settings';
 
-export class State {
+export class Block {
   uuid: string;
   name: string;
   template: string;
@@ -12,8 +12,8 @@ export class State {
   inputContainer: Variable[];
   outputContainer: Variable[];
   style: Style;
-  source: Source;
-  target: Target;
+  source: Input;
+  target: Output;
   settings: Settings;
   x: number;
   y: number;

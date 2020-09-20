@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, Inject, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {State} from '../../../domain/state';
+import {Block} from '../../../domain/block';
 import {ObjectService} from '../../services/object.service';
 import {JsPlumbStyleService} from '../../services/js-plumb-style.service';
 import CONSTANTS from '../../../config/business-constants';
 import {jsPlumbInstance} from 'jsplumb';
-import {Diagram} from '../../../domain/diagram';
+import {Schema} from '../../../domain/schema';
 import {JsplumbCanvasComponent} from '../jsplumb/jsplumb-canvas/jsplumb-canvas.component';
 
 
@@ -15,8 +15,8 @@ import {JsplumbCanvasComponent} from '../jsplumb/jsplumb-canvas/jsplumb-canvas.c
   encapsulation: ViewEncapsulation.None
 })
 export class ActionComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input() state: State;
-  @Input() diagram: Diagram;
+  @Input() state: Block;
+  @Input() diagram: Schema;
 
   jsPlumbInstance: jsPlumbInstance;
   readonly CONSTANTS = CONSTANTS;
@@ -57,7 +57,7 @@ export class ActionComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  countFunction(states: State[], state: State) {
+  countFunction(states: Block[], state: Block) {
     this.objectService.countFunction(states, state);
   }
 

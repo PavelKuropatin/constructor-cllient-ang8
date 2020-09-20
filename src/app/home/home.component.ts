@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ObjectHttpService} from './services/object-http.service';
-import {Diagram} from '../domain/diagram';
+import {Schema} from '../domain/schema';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {MatDialog} from '@angular/material';
 import {ObjectService} from './services/object.service';
 import {JsPlumbStyleService} from './services/js-plumb-style.service';
-import {State} from '../domain/state';
+import {Block} from '../domain/block';
 import {OpenDiagramComponent} from './components/dialog/open-diagram/open-diagram.component';
 import {Connection} from '../domain/connection';
 import {Canvas} from '../domain/canvas';
@@ -17,10 +17,10 @@ import {Canvas} from '../domain/canvas';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  diagram: Diagram;
+  diagram: Schema;
   canvas: Canvas;
-  // fullState: State;
-  settingsState: State;
+  // fullState: Block;
+  settingsState: Block;
   targetEndpointStyle1: object;
   targetEndpointStyle2: object;
   sourceEndpointStyle1: object;
@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
     this.sourceEndpointStyle1 = this.jsPlumbStyleService.getSourceEndpointStyle1();
     this.sourceEndpointStyle2 = this.jsPlumbStyleService.getSourceEndpointStyle2();
     this.isActiveSetting = false;
-    this.diagram = new Diagram([]);
+    this.diagram = new Schema([]);
     this.objectHttpService.getDiagram('53e34ea9-4916-4ec0-9c4e-2925654d9320')
       .subscribe(diagram => this.diagram = diagram);
     this.settingsState = null;
@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit {
     // this.router.navigate([ROUTES.MODELING]);
   }
 
-  showStateSettings(state: State) {
+  showStateSettings(state: Block) {
     this.settingsState = state;
   }
 

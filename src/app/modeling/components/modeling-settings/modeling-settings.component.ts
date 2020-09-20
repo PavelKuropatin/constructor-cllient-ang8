@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {State} from '../../../domain/state';
+import {Block} from '../../../domain/block';
 import {ObjectService} from '../../../home/services/object.service';
 import CONSTANTS from '../../../config/business-constants';
 import {ObjectHttpService} from '../../../home/services/object-http.service';
@@ -16,8 +16,8 @@ import {Action} from '../../../domain/action';
 export class ModelingSettingsComponent implements OnInit {
   private actions: string[];
   private icons: string[];
-  private state: State;
-  private countFunction: (states: State[], state: State) => any;
+  private state: Block;
+  private countFunction: (states: Block[], state: Block) => any;
   private sourceLayout: string;
   private targetLayout: string;
   private sortableOptions: SortablejsOptions;

@@ -1,4 +1,4 @@
-export class Target {
+export class Output {
   uuid: string;
 
   constructor(uuid: string) {

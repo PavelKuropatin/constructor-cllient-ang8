@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {Diagram} from '../../../domain/diagram';
-import {State} from '../../../domain/state';
+import {Schema} from '../../../domain/schema';
+import {Block} from '../../../domain/block';
 import {ObjectService} from '../../services/object.service';
 import CONSTANTS from '../../../config/business-constants';
 import {ContainerType} from '../../../domain/container-type.enum';
@@ -17,11 +17,11 @@ import {DeleteVariableComponent} from '../dialog/delete-variable/delete-variable
 })
 export class SidenavComponent implements OnInit {
 
-  @Input() diagram: Diagram;
+  @Input() diagram: Schema;
   @Output() showStateSettingsF: EventEmitter<any> = new EventEmitter<any>();
 
-  fullState: State;
-  settingsState: State;
+  fullState: Block;
+  settingsState: Block;
   partials: string[];
   colors: object;
   INPUT: ContainerType;
@@ -39,7 +39,7 @@ export class SidenavComponent implements OnInit {
     this.OUTPUT = ContainerType.OUTPUT;
   }
 
-  addVariable(state: State, type: ContainerType) {
+  addVariable(state: Block, type: ContainerType) {
     const dialogRef = this.dialog.open(AddVariableComponent, {
       panelClass: 'no-dialog-padding'
     });
@@ -50,7 +50,7 @@ export class SidenavComponent implements OnInit {
     });
   }
 
-  showFullState(state: State) {
+  showFullState(state: Block) {
     if (this.fullState === state) {
       this.fullState = null;
     } else {
@@ -59,11 +59,11 @@ export class SidenavComponent implements OnInit {
     }
   }
 
-  isFullState(state: State) {
+  isFullState(state: Block) {
     return state === this.fullState;
   }
 
-  deleteVariable(state: State, type: ContainerType) {
+  deleteVariable(state: Block, type: ContainerType) {
     const dialogRef = this.dialog.open(DeleteVariableComponent, {
       panelClass: 'no-dialog-padding',
       data: type === ContainerType.INPUT ? state.inputContainer : state.outputContainer
@@ -89,15 +89,15 @@ export class SidenavComponent implements OnInit {
     this.objectService.removeIndex(index, objects);
   }
 
-  countFunction(states: State[], state: State) {
+  countFunction(states: Block[], state: Block) {
     this.objectService.countFunction(states, state);
   }
 
-  createNewState(diagram: Diagram) {
+  createNewState(diagram: Schema) {
     return this.objectService.createState(diagram);
   }
 
-  deleteState(diagram: Diagram, state: State) {
+  deleteState(diagram: Schema, state: Block) {
     this.objectService.deleteState(diagram, state);
   }
 

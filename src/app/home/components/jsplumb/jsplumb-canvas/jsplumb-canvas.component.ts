@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import {jsPlumb, jsPlumbInstance} from 'jsplumb';
 import 'jquery-ui';
-import {Diagram} from '../../../../domain/diagram';
+import {Schema} from '../../../../domain/schema';
 import {Canvas} from '../../../../domain/canvas';
 
 declare var $: any;
@@ -25,7 +25,7 @@ declare var $: any;
 export class JsplumbCanvasComponent implements OnInit, AfterViewInit, DoCheck {
 
   @Input() canvas: Canvas;
-  @Input() diagram: Diagram;
+  @Input() diagram: Schema;
   @Output() onConnection: EventEmitter<any> = new EventEmitter<any>();
   jsPlumbInstance: jsPlumbInstance;
 

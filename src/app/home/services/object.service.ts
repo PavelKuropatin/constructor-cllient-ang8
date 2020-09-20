@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ObjectHttpService} from './object-http.service';
-import {Diagram} from '../../domain/diagram';
-import {State} from '../../domain/state';
+import {Schema} from '../../domain/schema';
+import {Block} from '../../domain/block';
 import {Variable} from '../../domain/variable';
-import {Target} from '../../domain/target';
+import {Output} from '../../domain/output';
 import * as math from 'maths.ts';
 
 @Injectable({
@@ -11,17 +11,17 @@ import * as math from 'maths.ts';
 })
 export class ObjectService {
 
-  private configState: State;
+  private configState: Block;
 
   constructor(private objectHttpService: ObjectHttpService) {
   }
 
-  createState(diagram: Diagram) {
+  createState(diagram: Schema) {
     this.objectHttpService.createState(diagram.uuid)
       .subscribe(state => diagram.states.push(state));
   }
 
-  deleteState(diagram: Diagram, state: State) {
+  deleteState(diagram: Schema, state: Block) {
     this.objectHttpService.deleteState(diagram.uuid, state.uuid)
       .subscribe(response => {
         console.log(response);
@@ -40,7 +40,7 @@ export class ObjectService {
     array.splice(index, 1);
   }
 
-  setConfigState(state: State) {
+  setConfigState(state: Block) {
     this.configState = state;
   }
 
@@ -48,7 +48,7 @@ export class ObjectService {
     return this.configState;
   }
 
-  addVariable(state: State, variable: Variable) {
+  addVariable(state: Block, variable: Variable) {
     this.objectHttpService.createVariable(state.uuid, variable)
       .subscribe(outState => {
         state.inputContainer = outState.inputContainer;
@@ -56,7 +56,7 @@ export class ObjectService {
       });
   }
 
-  deleteVariable(state: State, variable: Variable) {
+  deleteVariable(state: Block, variable: Variable) {
     this.objectHttpService.deleteVariable(state.uuid, variable)
       .subscribe(outState => {
         state.inputContainer = outState.inputContainer;
@@ -64,7 +64,7 @@ export class ObjectService {
       });
   }
 
-  updateContainer(states: State[], sourceState: State, targetState: State) {
+  updateContainer(states: Block[], sourceState: Block, targetState: Block) {
     const inputContainer = targetState.inputContainer;
 
     sourceState.outputContainer
@@ -78,7 +78,7 @@ export class ObjectService {
       });
   }
 
-  countFunction(states: State[], state: State) {
+  countFunction(states: Block[], state: Block) {
     const parentStates = this.getParentStates(states, state.target);
     parentStates.forEach(parentState => {
       this.applyParentContainer(parentState.outputContainer, state.inputContainer);
@@ -98,15 +98,15 @@ export class ObjectService {
     });
   }
 
-  private findStateBySource(states: State[], sourceUuid: string): State {
+  private findStateBySource(states: Block[], sourceUuid: string): Block {
     return states.find(state => state.source.uuid === sourceUuid);
   }
 
-  private findStateByTarget(states: State[], targetUuid: string): State {
+  private findStateByTarget(states: Block[], targetUuid: string): Block {
     return states.find(state => state.target.uuid === targetUuid);
   }
 
-  private getParentStates(states: State[], target: Target) {
+  private getParentStates(states: Block[], target: Output) {
     return states.filter(state => {
       return state.source.connections.find(connection => connection.target === target);
     });

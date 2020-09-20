@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Diagram} from '../../domain/diagram';
+import {Schema} from '../../domain/schema';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {State} from '../../domain/state';
+import {Block} from '../../domain/block';
 import {Variable} from '../../domain/variable';
 import {Settings} from '../../domain/settings';
 import {Action} from '../../domain/action';
@@ -29,36 +29,36 @@ export class ObjectHttpService {
     return this.http.delete(`${this.diagramUrl}/${diagramUuid}/state/${stateUuid}`);
   }
 
-  createState(diagramUuid: string): Observable<State> {
-    return this.http.post<State>(`${this.diagramUrl}/${diagramUuid}/state`, {});
+  createState(diagramUuid: string): Observable<Block> {
+    return this.http.post<Block>(`${this.diagramUrl}/${diagramUuid}/state`, {});
   }
 
-  getDiagrams(): Observable<Diagram[]> {
-    return this.http.get<Diagram[]>(this.diagramUrl);
+  getDiagrams(): Observable<Schema[]> {
+    return this.http.get<Schema[]>(this.diagramUrl);
   }
 
-  saveDiagram(diagram: Diagram): Observable<Diagram> {
-    return this.http.post<Diagram>(this.diagramUrl, diagram);
+  saveDiagram(diagram: Schema): Observable<Schema> {
+    return this.http.post<Schema>(this.diagramUrl, diagram);
   }
 
-  updateDiagram(diagram: Diagram): Observable<Diagram> {
-    return this.http.put<Diagram>(`${this.diagramUrl}/${diagram.uuid}`, diagram);
+  updateDiagram(diagram: Schema): Observable<Schema> {
+    return this.http.put<Schema>(`${this.diagramUrl}/${diagram.uuid}`, diagram);
   }
 
-  getDiagram(uuid: string): Observable<Diagram> {
-    return this.http.get<Diagram>(`${this.diagramUrl}/${uuid}`);
+  getDiagram(uuid: string): Observable<Schema> {
+    return this.http.get<Schema>(`${this.diagramUrl}/${uuid}`);
   }
 
-  createNewDiagram(): Observable<Diagram> {
-    return this.http.post<Diagram>(`${this.diagramUrl}/new`, {});
+  createNewDiagram(): Observable<Schema> {
+    return this.http.post<Schema>(`${this.diagramUrl}/new`, {});
   }
 
-  createVariable(stateUuid: string, variable: Variable): Observable<State> {
-    return this.http.post<State>(`${this.stateUrl}/${stateUuid}/container/create`, variable);
+  createVariable(stateUuid: string, variable: Variable): Observable<Block> {
+    return this.http.post<Block>(`${this.stateUrl}/${stateUuid}/container/create`, variable);
   }
 
-  deleteVariable(stateUuid: string, variable: Variable): Observable<State> {
-    return this.http.request<State>('delete', `${this.stateUrl}/${stateUuid}/container/delete`, {body: variable});
+  deleteVariable(stateUuid: string, variable: Variable): Observable<Block> {
+    return this.http.request<Block>('delete', `${this.stateUrl}/${stateUuid}/container/delete`, {body: variable});
   }
 
   deleteDiagram(diagramUuid: string): Observable<object> {

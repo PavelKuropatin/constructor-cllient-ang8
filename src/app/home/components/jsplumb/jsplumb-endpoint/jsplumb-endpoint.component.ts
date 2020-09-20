@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {ActionComponent} from '../../action/action.component';
 import {jsPlumbInstance} from 'jsplumb';
-import {State} from '../../../../domain/state';
+import {Block} from '../../../../domain/block';
 
 @Component({
   selector: 'app-jsplumb-endpoint',
@@ -12,7 +12,7 @@ export class JsplumbEndpointComponent implements OnInit, AfterViewInit, OnDestro
 
   @Input() anchor: string;
   @Input() uuid: string;
-  @Input() state: State;
+  @Input() state: Block;
   @Input() settings: object;
   jsPlumbInstance: jsPlumbInstance;
   private endpoint: any;
